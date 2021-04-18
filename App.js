@@ -15,10 +15,18 @@ import Midtrans from './pages/midtrans';
 
 // firebase.initializeApp(firebaseConfig)
 
+import store from './store'
+
+if (!firebase.apps.length) {
+  firebase.initializeApp(firebaseConfig);
+} else {
+  firebase.app(); // if already initialized, use that one
+}
 const Stack = createStackNavigator();
 
 export default function App() {
   return (
+  <Provider store={store}>
     <NavigationContainer>
       <Stack.Navigator initialRouteName="Login" screenOptions={{headerShown: false}} >
         {/* <Stack.Screen name="Home" component={Home} /> */}
@@ -30,6 +38,7 @@ export default function App() {
         <Stack.Screen name="Midtrans" component={Midtrans} />
       </Stack.Navigator>
     </NavigationContainer>
+  </Provider>
   );
 }
 
