@@ -10,22 +10,28 @@ import {firebaseConfig} from './config'
 import * as firebase from 'firebase'
 import Dashboard from './pages/dashboard';
 import Chat from './pages/chat';
+import store from './store'
 
-firebase.initializeApp(firebaseConfig)
-
+if (!firebase.apps.length) {
+  firebase.initializeApp(firebaseConfig);
+} else {
+  firebase.app(); // if already initialized, use that one
+}
 const Stack = createStackNavigator();
 
 export default function App() {
   return (
-    <NavigationContainer>
-      <Stack.Navigator initialRouteName="Login" screenOptions={{headerShown: false}} >
-        <Stack.Screen name="Home" component={Home} />
-        <Stack.Screen name="Login"  component={Login} />
-        {/* <Stack.Screen name="Notif" component={Notif} /> */}
-        <Stack.Screen name="Chat"  component={Chat} />
-        <Stack.Screen name="Dashboard" options={{ headerShown: false }} component={Dashboard} />
-      </Stack.Navigator>
-    </NavigationContainer>
+    <Provider store={store}>
+      <NavigationContainer>
+        <Stack.Navigator initialRouteName="Login" screenOptions={{headerShown: false}} >
+          <Stack.Screen name="Home" component={Home} />
+          <Stack.Screen name="Login"  component={Login} />
+          {/* <Stack.Screen name="Notif" component={Notif} /> */}
+          <Stack.Screen name="Chat"  component={Chat} />
+          <Stack.Screen name="Dashboard" options={{ headerShown: false }} component={Dashboard} />
+        </Stack.Navigator>
+      </NavigationContainer>
+    </Provider>
   );
 }
 

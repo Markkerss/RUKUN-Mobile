@@ -1,12 +1,23 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import { Image, ScrollView, StyleSheet, Text, View } from 'react-native';
+import { useDispatch, useSelector } from 'react-redux'
 import { LinearGradient } from 'expo-linear-gradient';
 import { Avatar, Button } from 'react-native-paper';
 import {useFonts,Poppins_700Bold,Poppins_600SemiBold,Poppins_500Medium} from '@expo-google-fonts/poppins';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import ListItemTransaction from '../components/listItemTransaction';
+import { setTransactionsAsync } from '../store/actions/transactions'
+
 
 const Home = ({route,navigation}) =>{
+    const dispatch = useDispatch()
+    const { transactions } = useSelector(state => state.transactionsReducer)
+    
+    useEffect (()  => {
+        dispatch(setTransactionsAsync())
+        console.log(transactions, "<<<<transactions")
+    }, [])
+
     let [fontsLoaded] = useFonts({Poppins_700Bold,Poppins_600SemiBold,Poppins_500Medium})
     if (!fontsLoaded) {
         return <Text>loading</Text>;
@@ -37,14 +48,9 @@ const Home = ({route,navigation}) =>{
             <View style={{marginTop:15, height:400}}>
                 <Text style={{...styles.desaName, color:"#665EDC"}}>Transaction</Text>
                 <ScrollView>
-                    <ListItemTransaction/>
-                    <ListItemTransaction/>
-                    <ListItemTransaction/>
-                    <ListItemTransaction/>
-                    <ListItemTransaction/>
-                    <ListItemTransaction/>
-                    <ListItemTransaction/>
-                    <ListItemTransaction/>
+                    {transactions.map(transaction => 
+                        <ListItemTransaction transaction={transaction} key={transaction.id}/>
+                    )}
                 </ScrollView>
             </View>
         </View>
