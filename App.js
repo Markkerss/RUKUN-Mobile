@@ -10,8 +10,10 @@ import {firebaseConfig} from './config'
 import * as firebase from 'firebase'
 import Dashboard from './pages/dashboard';
 import Chat from './pages/chat';
+import Pay from './pages/pay';
+import Midtrans from './pages/midtrans';
 
-firebase.initializeApp(firebaseConfig)
+// firebase.initializeApp(firebaseConfig)
 
 const Stack = createStackNavigator();
 
@@ -19,11 +21,13 @@ export default function App() {
   return (
     <NavigationContainer>
       <Stack.Navigator initialRouteName="Login" screenOptions={{headerShown: false}} >
-        <Stack.Screen name="Home" component={Home} />
+        {/* <Stack.Screen name="Home" component={Home} /> */}
         <Stack.Screen name="Login"  component={Login} />
         {/* <Stack.Screen name="Notif" component={Notif} /> */}
-        <Stack.Screen name="Chat"  component={Chat} />
-        <Stack.Screen name="Dashboard" options={{ headerShown: false }} component={Dashboard} />
+        <Stack.Screen name="Chat"  component={Chat} options={{ headerShown: true }} />
+        <Stack.Screen name="Dashboard" component={Dashboard} />
+        <Stack.Screen name="Pay" component={Pay} />
+        <Stack.Screen name="Midtrans" component={Midtrans} />
       </Stack.Navigator>
     </NavigationContainer>
   );

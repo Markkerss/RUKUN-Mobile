@@ -6,7 +6,7 @@ import {useFonts,Poppins_700Bold,Poppins_600SemiBold,Poppins_500Medium} from '@e
 import Icon from 'react-native-vector-icons/FontAwesome';
 import ListItemTransaction from '../components/listItemTransaction';
 
-const Home = ({route,navigation}) =>{
+const MyTransaction = ({route,navigation}) =>{
     let [fontsLoaded] = useFonts({Poppins_700Bold,Poppins_600SemiBold,Poppins_500Medium})
     if (!fontsLoaded) {
         return <Text>loading</Text>;
@@ -17,25 +17,8 @@ const Home = ({route,navigation}) =>{
                 <Image source={require('../assets/logoBlue.png')} style={styles.logo}></Image>
                 <Avatar.Text  size={37} label="NA" />
             </View>
-            <LinearGradient colors={['#e0c3fc', '#8ec5fc']} style={styles.card}>
-                <Image source={require('../assets/test.png')} style={styles.ilustrasi}></Image>
-                <View style={{flexDirection:"column",justifyContent:"space-between", height: "100%"}}>
-                    <Text style={styles.desaName}> Desa Suka Maju</Text>
-                    <View>
-                        <Text style={styles.judulSaldo}>Saldo</Text>
-                        <Text style={styles.saldo}> Rp 10.000.000</Text>
-
-                    </View>
-                </View>
-            </LinearGradient>
-            <View style={styles.buttonContainer}>
-                <Button onPress={()=>{navigation.navigate("Pay")}} mode="contained" style={{flexGrow: 1, marginRight: 10}}>Pay</Button>
-                <Button onPress={()=>{navigation.navigate("Chat")}} mode="contained" style={{paddingTop:0}}>
-                    <Icon name="commenting-o" style={{fontSize:20}}></Icon>
-                </Button>
-            </View>
-            <View style={{marginTop:15, height:400}}>
-                <Text style={{...styles.desaName, color:"#665EDC"}}>Transaction</Text>
+            <View style={{marginTop:15, height:600}}>
+                <Text style={{...styles.desaName, color:"#665EDC"}}>My Transaction</Text>
                 <ScrollView>
                     <ListItemTransaction/>
                     <ListItemTransaction/>
@@ -107,4 +90,4 @@ const styles = StyleSheet.create({
     
 });
 
-export default Home
+export default MyTransaction

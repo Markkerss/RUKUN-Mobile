@@ -17,10 +17,12 @@ const Chat = ({route,navigate}) =>{
         <>
         <View style={styles.container}>
             <View>
-                <View style={styles.bubbleMessage}>
-                    <Text>WKKWKWKW ada ada ae dah lu WKWKWKKW</Text>
+                <View>
+                    <Text style={{marginLeft: 5, marginBottom:5}}>Fadho</Text>
+                    <Text style={styles.bubbleMessage}>WKKWKWKW ada ada ae dah lu WKWKWKKW</Text>
                 </View>
                 <View style={{justifyContent:"flex-end", flexDirection:'row', marginTop:25}}>
+                    
                     <Text style={styles.bubbleMessageMe}>WKKWKWKW ada ada ae dah lu WKWKWKKW</Text>
 
                 </View>
@@ -40,7 +42,7 @@ const Chat = ({route,navigate}) =>{
 const styles = StyleSheet.create({
     container: {
       flex: 1,
-      paddingTop: 40,
+      paddingTop: 20,
       paddingHorizontal: 10,
       backgroundColor: '#ecf0f1',
     },
@@ -48,7 +50,7 @@ const styles = StyleSheet.create({
         width:"100%",
         flexGrow:1,
         position:"absolute",
-        bottom: 0,
+        bottom: 5,
         flexDirection: "row",
         height: 50,
         backgroundColor: "#bdc3c7",
@@ -78,52 +80,6 @@ const styles = StyleSheet.create({
         padding: 10,
         maxWidth: 250
     },
-    logo:{
-        width: 120,
-        height: 50
-    },
-    header:{
-        flexDirection: "row",
-        justifyContent: "space-between",
-        alignItems: "center"
-    },
-    card:{
-        marginTop: 10,
-        backgroundColor: "red",
-        width : "100%",
-        height : 200,
-        borderRadius: 20,
-        padding: 10
-    },
-    desaName:{
-        fontFamily:'Poppins_700Bold',
-        fontSize: 25,
-        color: "white",
-    },
-    judulSaldo:{
-        fontFamily:'Poppins_600SemiBold',
-        fontSize: 20,
-        color: "white",
-        paddingLeft: 6,
-        marginBottom: -8,
-    },
-    saldo:{
-        fontFamily:'Poppins_600SemiBold',
-        fontSize: 30,
-        color: "white",
-    },
-    ilustrasi :{
-        position: "absolute",
-        bottom: 25,
-        right :20,
-        width: 120,
-        height: 100,
-        opacity: 0.5
-    },
-    buttonContainer : {
-        flexDirection: "row",
-        marginTop: 10
-    }
     
 });
 
