@@ -1,34 +1,33 @@
 {
   "project_info": {
-    "project_number": "306946826839",
-    "firebase_url": "https://kanban-mufadho-default-rtdb.firebaseio.com",
-    "project_id": "kanban-mufadho",
-    "storage_bucket": "kanban-mufadho.appspot.com"
+    "project_number": "725573402222",
+    "project_id": "rukun-5cdc9",
+    "storage_bucket": "rukun-5cdc9.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:306946826839:android:564d10596e52cc01e1f912",
+        "mobilesdk_app_id": "1:725573402222:android:985d10d16d762d0edb707f",
         "android_client_info": {
           "package_name": "com.rukun"
         }
       },
       "oauth_client": [
         {
-          "client_id": "306946826839-b3ag0i4s3p8vq3ih0ou1biipdnq49sqb.apps.googleusercontent.com",
+          "client_id": "725573402222-o46nrjs74h4c58da2e1gcssbg5lo8ge4.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyAtJdxY0YL8PGAP7caWY3HdFYPfTwXmbtM"
+          "current_key": "AIzaSyAf1O3g8hvZuT-2dR0L4Bfvyq3r6Wt2CTs"
         }
       ],
       "services": {
         "appinvite_service": {
           "other_platform_oauth_client": [
             {
-              "client_id": "306946826839-b3ag0i4s3p8vq3ih0ou1biipdnq49sqb.apps.googleusercontent.com",
+              "client_id": "725573402222-o46nrjs74h4c58da2e1gcssbg5lo8ge4.apps.googleusercontent.com",
               "client_type": 3
             }
           ]

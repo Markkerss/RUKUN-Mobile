@@ -8,14 +8,12 @@ import Icon from 'react-native-vector-icons/FontAwesome';
 import ListItemTransaction from '../components/listItemTransaction';
 import { setTransactionsAsync } from '../store/actions/transactions'
 
-
 const Home = ({route,navigation}) =>{
     const dispatch = useDispatch()
     const { transactions } = useSelector(state => state.transactionsReducer)
     
     useEffect (()  => {
         dispatch(setTransactionsAsync())
-        console.log(transactions, "<<<<transactions")
     }, [])
 
     let [fontsLoaded] = useFonts({Poppins_700Bold,Poppins_600SemiBold,Poppins_500Medium})
@@ -48,7 +46,7 @@ const Home = ({route,navigation}) =>{
             <View style={{marginTop:15, height:400}}>
                 <Text style={{...styles.desaName, color:"#665EDC"}}>Transaction</Text>
                 <ScrollView>
-                    {transactions.map(transaction => 
+                    {transactions?.map(transaction => 
                         <ListItemTransaction transaction={transaction} key={transaction.id}/>
                     )}
                 </ScrollView>

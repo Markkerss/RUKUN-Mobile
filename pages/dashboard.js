@@ -1,7 +1,6 @@
 import * as React from 'react';
 import { BottomNavigation, Text } from 'react-native-paper';
 import { useFonts, Poppins_700Bold } from '@expo-google-fonts/poppins';
-import Notif from './notif';
 import Home from './home';
 import Icon from 'react-native-vector-icons/FontAwesome';
 
@@ -23,7 +22,7 @@ const Dashboard = ({route, navgation}) => {
         }}
         
         />
-      <Tab.Screen name="Settings" component={Notif} 
+      <Tab.Screen name="Settings" component={Home} 
         options={{
             tabBarLabel: 'Home',
             tabBarIcon: ({ color }) => (

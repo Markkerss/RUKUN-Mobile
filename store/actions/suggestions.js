@@ -3,7 +3,7 @@ export function setSuggestions(payload) {
 }
   
 export function setSuggestionsAsync() {
-  const url = 'http://localhost:3000/suggestion'
+  const url = 'http://192.168.0.3:4000/suggestion'
   
   return (dispatch) => {
     fetch(url)

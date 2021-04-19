@@ -2,7 +2,6 @@ import React, { useEffect, useState } from 'react';
 import { Provider } from "react-redux";
 import Home from './pages/home'
 import Login from './pages/login'
-import Notif from './pages/notif'
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 import { StyleSheet, Text, View } from 'react-native';
@@ -26,7 +25,6 @@ export default function App() {
         <Stack.Navigator initialRouteName="Login" screenOptions={{headerShown: false}} >
           <Stack.Screen name="Home" component={Home} />
           <Stack.Screen name="Login"  component={Login} />
-          {/* <Stack.Screen name="Notif" component={Notif} /> */}
           <Stack.Screen name="Chat"  component={Chat} />
           <Stack.Screen name="Dashboard" options={{ headerShown: false }} component={Dashboard} />
         </Stack.Navigator>
@@ -34,6 +32,8 @@ export default function App() {
     </Provider>
   );
 }
+
+
 
 const styles = StyleSheet.create({
   container: {
