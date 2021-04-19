@@ -4,11 +4,19 @@ import { ImageBackground, StyleSheet, Text, View, Image } from 'react-native';
 import { TextInput, Button } from 'react-native-paper';
 import logo from '../assets/logins.png';
 import logoRukun from '../assets/logo.png';
+import { useDispatch, useSelector } from 'react-redux'
+import { login } from '../store/actions/user'
 
 
 const Login = ({route, navigation}) =>{
+    const dispatch = useDispatch()
     const [username, setUsername] = React.useState('');
     const [password, setPassword] = React.useState('');
+
+    const handleSubmit = ()=>{
+        dispatch(login(navigation,username,password))
+        // navigation.navigate("Dashboard");
+    }
 
     return(
         <View style={styles.container}>
@@ -46,7 +54,7 @@ const Login = ({route, navigation}) =>{
                     />
                 </View>
                 <View style={{width: "100%", paddingHorizontal: 30, marginTop: 10}}>
-                    <Button mode="contained" style={{height:50, justifyContent: 'center'}} onPress={()=>{navigation.navigate("Dashboard");}}>Login</Button>
+                    <Button mode="contained" style={{height:50, justifyContent: 'center'}} onPress={()=>{handleSubmit()}}>Login</Button>
                 </View>
                 <View style={{width: "100%", paddingHorizontal: 30, marginTop: 10, alignItems: "center"}}>
                     <Text>Dont have an account ? create</Text>

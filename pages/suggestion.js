@@ -1,16 +1,13 @@
 import React, { useEffect, useState } from 'react';
 import { Image, ImageBackground, ScrollView, StyleSheet, Text, View, KeyboardAvoidingView, Pressable } from 'react-native';
-import { TextInput, Menu, Button, Provider, Modal, Portal, IconButton  } from 'react-native-paper';
+import { TextInput, Menu, Button, Provider, Modal, Portal, IconButton, Surface, Chip, FAB  } from 'react-native-paper';
 import { LinearGradient } from 'expo-linear-gradient';
 import { Avatar } from 'react-native-paper';
 import {useFonts,Poppins_700Bold,Poppins_600SemiBold,Poppins_500Medium} from '@expo-google-fonts/poppins';
 import background from '../assets/background.png';
 import Icon from 'react-native-vector-icons/FontAwesome';
-import ListItemTransaction from '../components/listItemTransaction';
-import CurrencyInput from 'react-native-currency-input';
-import DropDown from 'react-native-paper-dropdown';
 
-const Pay = ({route,navigation}) =>{
+const Suggestion = ({route,navigation}) =>{
     //state data
     const [amount, setAmount] = useState('0')
     const [category, setCategory] = useState()
@@ -37,59 +34,16 @@ const Pay = ({route,navigation}) =>{
                     <IconButton onPress={()=>{navigation.goBack()}} icon="chevron-left" color="white" size={40} style={{position:"absolute", left:0, top:26}}></IconButton>
                     <Image source={require('../assets/logoWhite.png')} style={styles.logo}></Image>
                 </View>
-                <View style={styles.amount}>
-                    <Text style={{fontFamily:"Poppins_600SemiBold", fontSize:35, color:"white"}}>Rp </Text>
-                    <CurrencyInput
-                        value={amount}
-                        autoFocus
-                        selectionColor="white"
-                        onChangeValue={setAmount}
-                        delimiter="."
-                        separator=","
-                        precision={0}
-                        style={{fontSize:38, color:"white", fontWeight:"bold",marginTop: -8}}
-                        onChangeText={(formattedValue) => {
-                            console.log(amount); // $2,310.46
-                        }}
-                        />
-                </View>
+                
                 <View style={styles.content}>
-                    <KeyboardAvoidingView behavior={"position"}>
-                    <Text style={styles.judul}>Payment</Text>
-                    <TextInput
-                        label="Notes"
-                        mode = "outlined"
-                        value={notes}
-                        onChangeText={setNotes}
-                        style={{backgroundColor:"white"}}
-                        left={<TextInput.Icon name="format-title"/>}
-                    />
-                    <Pressable onPress={showModal} style={{marginTop:15}}>
-                        <TextInput
-                            label="Category"
-                            mode = "outlined"
-                            value={category}
-                            editable={false}
-                            onFocus={showModal}
-                            style={{backgroundColor:"white", }}
-                            left={<TextInput.Icon name="cash-register"/>}
-                        />
-                    </Pressable>
-                    {/* <TextInput
-                        label="Notes"
-                        mode = "outlined"
-                        value={notes}
-                        onChangeText={setNotes}
-                        style={{backgroundColor:"white", marginTop: 15}}
-                        left={
-                            <TextInput.Icon
-                            name="format-title" // where <Icon /> is any component from vector-icons or anything else
-                            
-                            />
-                        }
-                    /> */}
-                    
-                </KeyboardAvoidingView>
+                    <Text style={styles.judul}>Suggestion</Text>
+                    <Surface style={styles.card}>
+                        <Text style={styles.judulSection}>Jangan Korupsi !</Text>
+                        <Text style={styles.paragraph}>lorem ipsum sit dolor amet wkwkw wkwwkkw wkwkwkwkkw wkwkwk</Text>
+                        <View style={{flexDirection:"row", marginTop:10}}>
+                            <Chip icon="information" style={styles.information}>Information</Chip>
+                        </View>
+                    </Surface>
                 </View>
             </ImageBackground>
             
@@ -104,10 +58,11 @@ const Pay = ({route,navigation}) =>{
             </Portal>
             </Provider>
         </View>
-        <View>
-            <Button mode="contained" onPress={()=>{navigation.navigate("Midtrans",{amount, notes, category})}} style={{borderRadius:0, paddingVertical:6}}>Pay</Button>
-        </View>
-        
+        <FAB
+            style={styles.fab}
+            icon="plus"
+            onPress={() => {navigation.navigate("AddSuggestion")}}
+        />
         </>
     )
 }
@@ -143,6 +98,7 @@ const styles = StyleSheet.create({
         paddingTop: 40,
         justifyContent: "center",
         alignItems: "center",
+        paddingBottom:10,
         paddingHorizontal: 10,
     },
     amount:{
@@ -153,41 +109,37 @@ const styles = StyleSheet.create({
     },
     card:{
         marginTop: 10,
-        backgroundColor: "red",
-        width : "100%",
-        height : 200,
+        elevation:9,
         borderRadius: 20,
         padding: 10
-    },
-    desaName:{
-        fontFamily:'Poppins_700Bold',
-        fontSize: 25,
-        color: "white",
     },
     judul:{
         fontFamily:'Poppins_700Bold',
         fontSize: 30,
         color: "#867FEE",
-        textAlign: "center"
     },
-    saldo:{
+    judulSection:{
         fontFamily:'Poppins_600SemiBold',
-        fontSize: 30,
-        color: "white",
+        fontSize: 20
     },
-    ilustrasi :{
-        position: "absolute",
-        bottom: 25,
-        right :20,
-        width: 120,
-        height: 100,
-        opacity: 0.5
+    paragraph:{
+        fontFamily:'Poppins_500Medium',
+        fontSize: 14
     },
-    buttonContainer : {
-        flexDirection: "row",
-        marginTop: 10
-    }
+    information: {
+        margin:2, 
+        backgroundColor:"rgba(241, 196, 15,0.4)", 
+        color: "rgba(243, 156, 18,1.0)"
+    },
+    fab: {
+        position: 'absolute',
+        margin: 16,
+        right: 0,
+        bottom: 0,
+    },
+
+
     
 });
 
-export default Pay
+export default Suggestion

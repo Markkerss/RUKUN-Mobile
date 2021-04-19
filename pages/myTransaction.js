@@ -1,13 +1,23 @@
 import React, { useEffect, useState } from 'react';
-import { Image, ScrollView, StyleSheet, Text, View } from 'react-native';
+import { useDispatch, useSelector } from 'react-redux'
+import { FlatList, Image, ScrollView, StyleSheet, Text, View } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
 import { Avatar, Button } from 'react-native-paper';
 import {useFonts,Poppins_700Bold,Poppins_600SemiBold,Poppins_500Medium} from '@expo-google-fonts/poppins';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import ListItemTransaction from '../components/listItemTransaction';
+import ListItemMyTransaction from '../components/listItemMyTransaction';
+import { setMyTransactionsAsync } from '../store/actions/transactions';
 
 const MyTransaction = ({route,navigation}) =>{
-    let [fontsLoaded] = useFonts({Poppins_700Bold,Poppins_600SemiBold,Poppins_500Medium})
+    const [fontsLoaded] = useFonts({Poppins_700Bold,Poppins_600SemiBold,Poppins_500Medium})
+    const dispatch = useDispatch()
+    const { myTransactions, loading } = useSelector(state => state.transactionsReducer)
+
+    useEffect(() => {
+        dispatch(setMyTransactionsAsync())
+    }, [dispatch])
+
     if (!fontsLoaded) {
         return <Text>loading</Text>;
     }
@@ -19,16 +29,23 @@ const MyTransaction = ({route,navigation}) =>{
             </View>
             <View style={{marginTop:15, height:600}}>
                 <Text style={{...styles.desaName, color:"#665EDC"}}>My Transaction</Text>
-                <ScrollView>
-                    <ListItemTransaction/>
-                    <ListItemTransaction/>
-                    <ListItemTransaction/>
-                    <ListItemTransaction/>
-                    <ListItemTransaction/>
-                    <ListItemTransaction/>
-                    <ListItemTransaction/>
-                    <ListItemTransaction/>
-                </ScrollView>
+                <FlatList
+                    data={myTransactions}
+                    renderItem={()=>(<ListItemMyTransaction/>)}
+                    keyExtractor={(item,index) => index.toString()}
+                    refreshing={loading}
+                    onRefresh={()=>{dispatch(setMyTransactionsAsync())}}
+                />
+                {/* <ScrollView>
+                    <ListItemMyTransaction/>
+                    <ListItemMyTransaction/>
+                    <ListItemMyTransaction/>
+                    <ListItemMyTransaction/>
+                    <ListItemMyTransaction/>
+                    <ListItemMyTransaction/>
+                    <ListItemMyTransaction/>
+                    <ListItemMyTransaction/>
+                </ScrollView> */}
             </View>
         </View>
     )

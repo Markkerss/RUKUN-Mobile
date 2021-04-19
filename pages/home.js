@@ -7,11 +7,18 @@ import {useFonts,Poppins_700Bold,Poppins_600SemiBold,Poppins_500Medium} from '@e
 import Icon from 'react-native-vector-icons/FontAwesome';
 import ListItemTransaction from '../components/listItemTransaction';
 import { setTransactionsAsync } from '../store/actions/transactions'
+import AsyncStorage from '@react-native-async-storage/async-storage';
+
 
 
 const Home = ({route,navigation}) =>{
     const dispatch = useDispatch()
     const { transactions } = useSelector(state => state.transactionsReducer)
+    const { desa } = useSelector(state => state.desaReducer)
+
+    const clearAsyncStorage = async() => {
+        await AsyncStorage.clear();
+    }
     
     useEffect (()  => {
         dispatch(setTransactionsAsync())
@@ -31,24 +38,25 @@ const Home = ({route,navigation}) =>{
             <LinearGradient colors={['#e0c3fc', '#8ec5fc']} style={styles.card}>
                 <Image source={require('../assets/test.png')} style={styles.ilustrasi}></Image>
                 <View style={{flexDirection:"column",justifyContent:"space-between", height: "100%"}}>
-                    <Text style={styles.desaName}> Desa Suka Maju</Text>
+                    <Text style={styles.desaName}>{desa.name}</Text>
                     <View>
                         <Text style={styles.judulSaldo}>Saldo</Text>
-                        <Text style={styles.saldo}> Rp 10.000.000</Text>
+                        <Text style={styles.saldo}> Rp {desa.balance?.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".")}</Text>
 
                     </View>
                 </View>
             </LinearGradient>
             <View style={styles.buttonContainer}>
                 <Button onPress={()=>{navigation.navigate("Pay")}} mode="contained" style={{flexGrow: 1, marginRight: 10}}>Pay</Button>
-                <Button onPress={()=>{navigation.navigate("Chat")}} mode="contained" style={{paddingTop:0}}>
+                <Button onPress={()=>{clearAsyncStorage()}} mode="contained" style={{paddingTop:0}}>
                     <Icon name="commenting-o" style={{fontSize:20}}></Icon>
                 </Button>
             </View>
             <View style={{marginTop:15, height:400}}>
                 <Text style={{...styles.desaName, color:"#665EDC"}}>Transaction</Text>
                 <ScrollView>
-                    {transactions.map(transaction => 
+                    {console.log(transactions,"wakwaw")}
+                    {transactions?.map(transaction => 
                         <ListItemTransaction transaction={transaction} key={transaction.id}/>
                     )}
                 </ScrollView>

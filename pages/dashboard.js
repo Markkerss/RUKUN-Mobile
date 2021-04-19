@@ -7,8 +7,10 @@ import Icon from 'react-native-vector-icons/Entypo';
 
 import { createMaterialBottomTabNavigator } from '@react-navigation/material-bottom-tabs';
 import MyTransaction from './myTransaction';
+import Suggestion from './suggestion';
 
 const Tab = createMaterialBottomTabNavigator();
+
 
 const Dashboard = ({route, navgation}) => {
 
@@ -28,6 +30,15 @@ const Dashboard = ({route, navgation}) => {
           tabBarLabel: 'My Transaction',
           tabBarIcon: ({ color }) => (
             <Icon name="credit" color={color} size={26} />
+          ),
+          
+        }}
+      />
+      <Tab.Screen name="Suggestion" component={Suggestion} 
+        options={{
+          tabBarLabel: 'Suggestion',
+          tabBarIcon: ({ color }) => (
+            <Icon name="info" color={color} size={26} />
           ),
           
         }}
