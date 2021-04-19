@@ -11,10 +11,18 @@ export function login(navigation,username,password) {
         .then(async (res) => {
             console.log(res.data,"ini data");
             await AsyncStorage.setItem('token', res.data)
+
+            return axios.get(url + 'user/', {
+                headers: { access_token: res.data }
+            })
+        })
+        .then(async (user) => {
+            console.log(user.data,"ini data");
+            await AsyncStorage.setItem('user', JSON.stringify(user.data) )
             navigation.navigate("Dashboard")
         })
         .catch(error => {
-            console.log(error.response)
+            console.log(error)
         })
     }
   }

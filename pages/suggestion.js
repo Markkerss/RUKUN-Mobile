@@ -1,25 +1,21 @@
 import React, { useEffect, useState } from 'react';
-import { Image, ImageBackground, ScrollView, StyleSheet, Text, View, KeyboardAvoidingView, Pressable } from 'react-native';
+import { Image, ImageBackground, ScrollView, StyleSheet, Text, View, KeyboardAvoidingView, Pressable, FlatList } from 'react-native';
 import { TextInput, Menu, Button, Provider, Modal, Portal, IconButton, Surface, Chip, FAB  } from 'react-native-paper';
 import { LinearGradient } from 'expo-linear-gradient';
 import { Avatar } from 'react-native-paper';
 import {useFonts,Poppins_700Bold,Poppins_600SemiBold,Poppins_500Medium} from '@expo-google-fonts/poppins';
 import background from '../assets/background.png';
 import Icon from 'react-native-vector-icons/FontAwesome';
+import { useDispatch, useSelector } from 'react-redux';
+import { setSuggestionsAsync } from '../store/actions/suggestions';
 
 const Suggestion = ({route,navigation}) =>{
-    //state data
-    const [amount, setAmount] = useState('0')
-    const [category, setCategory] = useState()
-    const [notes, setNotes] = useState('')
-    
-    //dropdown Setting
-    const [visible, setVisible] = React.useState(false);
-    const showModal = () => setVisible(true);
-    const hideModal = () => setVisible(false);
-    //End dropdown Setting
+    const dispatch = useDispatch()
+    const {suggestions,loading,error} = useSelector(state => state.suggestionsReducer)
 
-
+    useEffect(() => {
+        dispatch(setSuggestionsAsync())
+    }, [])
 
     let [fontsLoaded] = useFonts({Poppins_700Bold,Poppins_600SemiBold,Poppins_500Medium})
     if (!fontsLoaded) {
@@ -37,25 +33,16 @@ const Suggestion = ({route,navigation}) =>{
                 
                 <View style={styles.content}>
                     <Text style={styles.judul}>Suggestion</Text>
-                    <Surface style={styles.card}>
-                        <Text style={styles.judulSection}>Jangan Korupsi !</Text>
-                        <Text style={styles.paragraph}>lorem ipsum sit dolor amet wkwkw wkwwkkw wkwkwkwkkw wkwkwk</Text>
-                        <View style={{flexDirection:"row", marginTop:10}}>
-                            <Chip icon="information" style={styles.information}>Information</Chip>
-                        </View>
-                    </Surface>
+                    <FlatList
+                        data={suggestions}
+                        renderItem={(item)=>(<Tile data={item.item}/>)}
+                        keyExtractor={(item,index) => index.toString()}
+                        refreshing={loading}
+                        onRefresh={()=>{dispatch(setSuggestionsAsync())}}
+                        style={{margin:-8}}
+                    />
                 </View>
             </ImageBackground>
-            
-            <Portal>
-                <Modal visible={visible} onDismiss={hideModal} contentContainerStyle={{margin:60, backgroundColor:"white", justifyContent:"center", padding:10, borderRadius:10}}>
-                    <Menu.Item icon="trash-can" onPress={() => {setCategory("Iuran Sampah"); hideModal()}} title="Iuran Sampah" />
-                    <Menu.Item icon="security" onPress={() => {setCategory("Iuran Keamanan"); hideModal()}} title="Iuran Keamanan" />
-                    <Menu.Item icon="cash" onPress={() => {{setCategory("Iuran Kas"); hideModal()}}} title="Iuran Kas" />
-                    <Menu.Item icon="cash-register" onPress={() => {{setCategory("Lain-Lain"); hideModal()}}} title="Lain-Lain" />
-                    <Menu.Item icon="close" onPress={() => {hideModal()}} title="close" />
-                </Modal>
-            </Portal>
             </Provider>
         </View>
         <FAB
@@ -64,6 +51,18 @@ const Suggestion = ({route,navigation}) =>{
             onPress={() => {navigation.navigate("AddSuggestion")}}
         />
         </>
+    )
+}
+
+const Tile = ({data}) =>{
+    return(
+        <Surface style={styles.card}>
+            <Text style={styles.judulSection}>{data?.title}</Text>
+            <Text style={styles.paragraph}>{data?.description}</Text>
+            <View style={{flexDirection:"row", marginTop:10}}>
+                <Chip icon="information" style={styles.information}>Information</Chip>
+            </View>
+        </Surface>
     )
 }
 
@@ -110,6 +109,7 @@ const styles = StyleSheet.create({
     card:{
         marginTop: 10,
         elevation:9,
+        margin:8,
         borderRadius: 20,
         padding: 10
     },

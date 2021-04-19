@@ -36,16 +36,6 @@ const MyTransaction = ({route,navigation}) =>{
                     refreshing={loading}
                     onRefresh={()=>{dispatch(setMyTransactionsAsync())}}
                 />
-                {/* <ScrollView>
-                    <ListItemMyTransaction/>
-                    <ListItemMyTransaction/>
-                    <ListItemMyTransaction/>
-                    <ListItemMyTransaction/>
-                    <ListItemMyTransaction/>
-                    <ListItemMyTransaction/>
-                    <ListItemMyTransaction/>
-                    <ListItemMyTransaction/>
-                </ScrollView> */}
             </View>
         </View>
     )

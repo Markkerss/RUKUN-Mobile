@@ -6,10 +6,50 @@ import {useFonts,Poppins_700Bold,Poppins_600SemiBold,Poppins_500Medium} from '@e
 import Icon from 'react-native-vector-icons/FontAwesome';
 import ListItemTransaction from '../components/listItemTransaction';
 import { IconButton } from 'react-native-paper';
+import firebase from '../firebase'
+import { useSelector } from 'react-redux';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const Chat = ({route,navigate}) =>{
     const [message, setMessage] = useState("")
+    const [chat, setChat] = useState([])
+    const [user, setUser] = useState({})
+
     let [fontsLoaded] = useFonts({Poppins_700Bold,Poppins_600SemiBold,Poppins_500Medium})
+    const db = firebase.firestore().collection("chat").doc("desa"+user.VillageId).collection("message")
+    
+    
+    const handleSubmit = () =>{
+        console.log("mashok");
+        console.log(user);
+        db.add({
+            message,
+            timestamp : firebase.firestore.FieldValue.serverTimestamp(),
+            userId : user.id,
+            userName : user.name
+        })
+    }
+
+    useEffect(() => {
+        async function getUser() {
+            const userString = await AsyncStorage.getItem('user')
+            setUser(JSON.parse(userString))
+        }
+        getUser()
+    }, [user])
+
+    useEffect(() => {
+        db.onSnapshot((querySnapshot) => {
+                var messages = [];
+                querySnapshot.forEach((doc) => {
+                    messages.push(doc.data());
+                });
+                setChat(messages)
+            });
+    }, [])
+
+
+
     if (!fontsLoaded) {
         return <Text>loading</Text>;
     }
@@ -17,20 +57,25 @@ const Chat = ({route,navigate}) =>{
         <>
         <View style={styles.container}>
             <View>
-                <View>
-                    <Text style={{marginLeft: 5, marginBottom:5}}>Fadho</Text>
-                    <Text style={styles.bubbleMessage}>WKKWKWKW ada ada ae dah lu WKWKWKKW</Text>
-                </View>
-                <View style={{justifyContent:"flex-end", flexDirection:'row', marginTop:25}}>
-                    
-                    <Text style={styles.bubbleMessageMe}>WKKWKWKW ada ada ae dah lu WKWKWKKW</Text>
-
-                </View>
+                {chat.map(item=>(
+                    item.userId == user.id ? (
+                        <View style={{justifyContent:"flex-end", flexDirection:'row', marginTop:25}}>
+                            <Text style={styles.bubbleMessageMe}>{item.message}</Text>
+                        </View>
+                    ) : (
+                        <View>
+                            <Text style={{marginLeft: 5, marginBottom:5}}>Fadho</Text>
+                            <Text style={styles.bubbleMessage}>{item.message}</Text>
+                        </View>
+                    )
+                ))}
+                
+                
       
             </View>
             <View style={styles.chatContainer}>
                 <TextInput style={styles.boxChat} value={message} onChangeText={setMessage}></TextInput>
-                <IconButton icon="send"/>
+                <IconButton onPress={handleSubmit} icon="send"/>
             </View>
             
         </View>

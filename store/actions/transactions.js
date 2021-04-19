@@ -20,7 +20,8 @@ export function setTransactionsAsync() {
       const dataDesa = {
         balance: res.data.balance,
         name : res.data.name,
-        location: res.data.location
+        location: res.data.location,
+        idDesa : res.data.id
 
       }
       dispatch({type: "setDesa", payload:dataDesa })

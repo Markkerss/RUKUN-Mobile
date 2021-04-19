@@ -6,12 +6,15 @@ import { Avatar } from 'react-native-paper';
 import {useFonts,Poppins_700Bold,Poppins_600SemiBold,Poppins_500Medium} from '@expo-google-fonts/poppins';
 import background from '../assets/background.png';
 import Icon from 'react-native-vector-icons/FontAwesome';
+import { useDispatch } from 'react-redux';
+import { createSuggestionsAsync } from '../store/actions/suggestions';
 
 const AddSuggestion = ({route,navigation}) =>{
+    const dispatch = useDispatch()
     //state data
-    const [amount, setAmount] = useState('0')
+    const [title, setTitle] = useState('')
     const [category, setCategory] = useState()
-    const [notes, setNotes] = useState('')
+    const [description, setDescription] = useState('')
     
     //dropdown Setting
     const [visible, setVisible] = React.useState(false);
@@ -19,6 +22,14 @@ const AddSuggestion = ({route,navigation}) =>{
     const hideModal = () => setVisible(false);
     //End dropdown Setting
 
+    const handleSubmit = () =>{
+        const data = {
+            title,
+            type : category,
+            description
+        }
+        dispatch(createSuggestionsAsync(data))
+    }
 
 
     let [fontsLoaded] = useFonts({Poppins_700Bold,Poppins_600SemiBold,Poppins_500Medium})
@@ -38,18 +49,11 @@ const AddSuggestion = ({route,navigation}) =>{
                 <View style={styles.content}>
                     <Text style={styles.judul}>Add Suggestion</Text>
                     <TextInput
-                        label="Notes"
+                        label="Titile"
+                        autoFocus
                         mode = "outlined"
-                        value={notes}
-                        onChangeText={setNotes}
-                        style={{backgroundColor:"white"}}
-                        left={<TextInput.Icon name="format-title"/>}
-                    />
-                    <TextInput
-                        label="Notes"
-                        mode = "outlined"
-                        value={notes}
-                        onChangeText={setNotes}
+                        value={title}
+                        onChangeText={setTitle}
                         style={{backgroundColor:"white"}}
                         left={<TextInput.Icon name="format-title"/>}
                     />
@@ -64,22 +68,32 @@ const AddSuggestion = ({route,navigation}) =>{
                             left={<TextInput.Icon name="cash-register"/>}
                         />
                     </Pressable>
+                    <TextInput
+                        label="Description"
+                        mode = "outlined"
+                        value={description}
+                        multiline
+                        numberOfLines={4}
+                        onChangeText={setDescription}
+                        style={{backgroundColor:"white"}}
+                        left={<TextInput.Icon name="format-title"/>}
+                    />
+                    
                 </View>
             </ImageBackground>
             
             <Portal>
                 <Modal visible={visible} onDismiss={hideModal} contentContainerStyle={{margin:60, backgroundColor:"white", justifyContent:"center", padding:10, borderRadius:10}}>
-                    <Menu.Item icon="trash-can" onPress={() => {setCategory("Iuran Sampah"); hideModal()}} title="Iuran Sampah" />
-                    <Menu.Item icon="security" onPress={() => {setCategory("Iuran Keamanan"); hideModal()}} title="Iuran Keamanan" />
-                    <Menu.Item icon="cash" onPress={() => {{setCategory("Iuran Kas"); hideModal()}}} title="Iuran Kas" />
-                    <Menu.Item icon="cash-register" onPress={() => {{setCategory("Lain-Lain"); hideModal()}}} title="Lain-Lain" />
+                    <Menu.Item icon="trash-can" onPress={() => {setCategory("information"); hideModal()}} title="information" />
+                    <Menu.Item icon="security" onPress={() => {setCategory("suggestion"); hideModal()}} title="suggestion" />
+                    <Menu.Item icon="cash" onPress={() => {{setCategory("alert"); hideModal()}}} title="alert" />
                     <Menu.Item icon="close" onPress={() => {hideModal()}} title="close" />
                 </Modal>
             </Portal>
             </Provider>
         </View>
         <View>
-            <Button mode="contained" onPress={()=>{}} style={{borderRadius:0, paddingVertical:6}}>Submit</Button>
+            <Button mode="contained" onPress={()=>{handleSubmit()}} style={{borderRadius:0, paddingVertical:6}}>Submit</Button>
         </View>
         </>
     )

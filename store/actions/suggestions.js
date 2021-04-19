@@ -1,16 +1,52 @@
+const url = 'http://192.168.100.104:3000/'
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import axios from 'axios'
+
 export function setSuggestions(payload) {
   return { type: 'setSuggestions', payload }
 }
   
+
 export function setSuggestionsAsync() {
-  const url = 'http://localhost:3000/suggestion'
-  
-  return (dispatch) => {
-    fetch(url)
-      .then(res => res.json())
-      .then(data => {
-        dispatch(setSuggestions(data))
-      })
-      .catch(err => console.log(err))
+  return async (dispatch) => {
+    dispatch({type: "isLoadingSuggestion", payload:true })
+    dispatch({type: "isErrorSuggestion", payload:null })
+    const token = await AsyncStorage.getItem('token')
+    console.log(token);
+    axios.get(url + 'suggestions', {
+      headers: { access_token: token }
+    })
+    .then(res => {
+      console.log(res.data,"ini data suggestion");
+      dispatch(setSuggestions(res.data.Suggestions))
+      dispatch({type: "isLoadingSuggestion", payload:false })
+    })
+    .catch(error => {
+        console.log(error.response)
+        dispatch({type: "isErrorSuggestion", payload:error.response })
+        dispatch({type: "isLoadingSuggestion", payload:false })
+    })
+  }
+}
+
+export function createSuggestionsAsync(data) {
+  return async (dispatch) => {
+    dispatch({type: "isLoadingSuggestion", payload:true })
+    dispatch({type: "isErrorSuggestion", payload:null })
+    const token = await AsyncStorage.getItem('token')
+    console.log(token);
+    axios.post(url + 'suggestions', data, {
+      headers: { access_token: token }
+    })
+    .then(res => {
+      console.log(res.data,"ini data create suggestion");
+      dispatch({type:"addSuggestions", payload: res.data})
+      dispatch({type: "isLoadingSuggestion", payload:false })
+    })
+    .catch(error => {
+        console.log(error.response)
+        dispatch({type: "isErrorSuggestion", payload:error.response })
+        dispatch({type: "isLoadingSuggestion", payload:false })
+    })
   }
 }
