@@ -24,9 +24,9 @@ const Home = ({route,navigation}) =>{
         <View style={styles.container}>
             <View style={styles.header}>
                 <Image source={require('../assets/logoBlue.png')} style={styles.logo}></Image>
-                <Avatar.Text  size={37} label="NA" />
+                <Avatar.Text size={37} label="NA" />
             </View>
-            <LinearGradient colors={['#e0c3fc', '#8ec5fc']} style={styles.card}>
+            <LinearGradient colors={['#8ec5fc', '#3C5CAC']} style={styles.card}>
                 <Image source={require('../assets/test.png')} style={styles.ilustrasi}></Image>
                 <View style={{flexDirection:"column",justifyContent:"space-between", height: "100%"}}>
                     <Text style={styles.desaName}> Desa Suka Maju</Text>
@@ -38,13 +38,13 @@ const Home = ({route,navigation}) =>{
                 </View>
             </LinearGradient>
             <View style={styles.buttonContainer}>
-                <Button mode="contained" style={{flexGrow: 1, marginRight: 10}}>Pay</Button>
-                <Button onPress={()=>{navigation.navigate("Chat")}} mode="contained" style={{paddingTop:0}}>
+                <Button mode="contained" style={{flexGrow: 1, marginRight: 10, backgroundColor: '#3C5CAC'}}>Pay</Button>
+                <Button onPress={()=>{navigation.navigate("Chat")}} mode="contained" style={{paddingTop:0, backgroundColor: '#3C5CAC'}}>
                     <Icon name="commenting-o" style={{fontSize:20}}></Icon>
                 </Button>
             </View>
             <View style={{marginTop:15, height:400}}>
-                <Text style={{...styles.desaName, color:"#665EDC"}}>Transaction</Text>
+                <Text style={{...styles.desaName, color:"#3C5CAC"}}>Transaction</Text>
                 <ScrollView>
                     {transactions?.map(transaction => 
                         <ListItemTransaction transaction={transaction} key={transaction.id}/>

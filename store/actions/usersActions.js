@@ -16,4 +16,19 @@ export function login(navigation,username,password,push_token) {
             console.log(error.response)
         })
     }
+}
+
+export function register(navigation,username,password,name,invitation_code) {
+  return (dispatch) => {
+      const payload = {username,password,name,invitation_code}
+      axios.post(url + 'user/register', payload, {
+      })
+      .then(async (res) => {
+          console.log(res.data,"ini data");
+          navigation.navigate("Login")
+      })
+      .catch(error => {
+          console.log(error.response)
+      })
   }
+}

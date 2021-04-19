@@ -11,7 +11,7 @@ const Tab = createMaterialBottomTabNavigator();
 const Dashboard = ({route, navgation}) => {
 
   return (
-    <Tab.Navigator>
+    <Tab.Navigator activeColor="'#3C5CAC">
       <Tab.Screen name="Home" component={Home} 
         options={{
           tabBarLabel: 'Home',
@@ -26,7 +26,7 @@ const Dashboard = ({route, navgation}) => {
         options={{
             tabBarLabel: 'Home',
             tabBarIcon: ({ color }) => (
-            <Icon name="home" color={color} size={26} />
+            <Icon name="gears" color={color} size={26} />
             ),
             
         }}

@@ -9,6 +9,7 @@ import {firebaseConfig} from './config'
 import * as firebase from 'firebase'
 import Dashboard from './pages/dashboard';
 import Chat from './pages/chat';
+import Register from './pages/register'
 import store from './store'
 
 if (!firebase.apps.length) {
@@ -25,6 +26,7 @@ export default function App() {
         <Stack.Navigator initialRouteName="Login" screenOptions={{headerShown: false}} >
           <Stack.Screen name="Home" component={Home} />
           <Stack.Screen name="Login"  component={Login} />
+          <Stack.Screen name="Register" component={Register} />
           <Stack.Screen name="Chat"  component={Chat} />
           <Stack.Screen name="Dashboard" options={{ headerShown: false }} component={Dashboard} />
         </Stack.Navigator>

@@ -3,7 +3,7 @@ import { StatusBar } from 'expo-status-bar';
 import { ImageBackground, StyleSheet, Text, View, Image } from 'react-native';
 import { TextInput, Button } from 'react-native-paper';
 import logo from '../assets/logins.png';
-import logoRukun from '../assets/logo.png';
+import logoRukun from '../assets/rukun-logo-transparent-blue.png';
 import { login } from '../store/actions/usersActions'
 import { useDispatch } from 'react-redux'
 import Constants from 'expo-constants';
@@ -82,10 +82,10 @@ const Login = ({route, navigation}) =>{
     return(
         <View style={styles.container}>
             <ImageBackground source={logo} style={styles.image}>
-                <Image source={logoRukun} style={{height:150, width: 150, marginTop: 100}}></Image>
-                <View style={{width: "100%", paddingHorizontal: 30}}>
+                <Image source={logoRukun} style={{height:200, width: 200, marginTop: 100}}></Image>
+                <View style={{width: "100%", paddingHorizontal: 30, marginTop: 20}}>
                     <TextInput
-                        label="Email"
+                        label="Username"
                         mode = "outlined"
                         value={username}
                         onChangeText={username => setUsername(username)}
@@ -98,7 +98,7 @@ const Login = ({route, navigation}) =>{
                         }
                     />
                 </View>
-                <View style={{width: "100%", paddingHorizontal: 30, marginTop: 10}}>
+                <View style={{width: "100%", paddingHorizontal: 30, marginTop: 20}}>
                     <TextInput
                         label="Password"
                         mode = "outlined"
@@ -114,11 +114,11 @@ const Login = ({route, navigation}) =>{
                         }
                     />
                 </View>
-                <View style={{width: "100%", paddingHorizontal: 30, marginTop: 10}}>
-                    <Button mode="contained" style={{height:50, justifyContent: 'center'}} onPress={()=>handleSubmit()}>Login</Button>
+                <View style={{width: "100%", paddingHorizontal: 30, marginTop: 30}}>
+                    <Button mode="contained" style={{height:50, justifyContent: 'center', backgroundColor: '#3C5CAC'}} onPress={()=>handleSubmit()}>Login</Button>
                 </View>
-                <View style={{width: "100%", paddingHorizontal: 30, marginTop: 10, alignItems: "center"}}>
-                    <Text>Dont have an account ? Create</Text>
+                <View style={{width: "100%", paddingHorizontal: 30, marginTop: 15, alignItems: "center"}}>
+                    <Text>Don't have an account? <Text onPress={() => navigation.navigate('Register')}>Register</Text></Text>
                 </View>
             </ImageBackground>
         </View>
