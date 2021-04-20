@@ -1,12 +1,12 @@
 const initialState = {
-  user: {}
+  error: null
 }
   
 function userReducer(state = initialState, action) {
   const { type, payload } = action
-  if(type === 'setUser') {
-    return { ...state, user: payload }
-  } 
+  if (type === 'isErrorUser') {
+    return { ...state, error: payload }
+  }
   return state
 }
   
