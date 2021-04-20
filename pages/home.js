@@ -46,7 +46,7 @@ const Home = ({route,navigation}) =>{
             </LinearGradient>
             <View style={styles.buttonContainer}>
                 <Button onPress={()=>{navigation.navigate("Pay")}} mode="contained" style={{flexGrow: 1, marginRight: 10}}>Pay</Button>
-                <Button onPress={()=>{clearAsyncStorage()}} mode="contained" style={{paddingTop:0}}>
+                <Button onPress={()=>{clearAsyncStorage(); navigation.navigate('Login');}} mode="contained" style={{paddingTop:0}}>
                     <Icon name="commenting-o" style={{fontSize:20}}></Icon>
                 </Button>
             </View>

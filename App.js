@@ -11,6 +11,7 @@ import * as firebase from 'firebase'
 import Dashboard from './pages/dashboard';
 import Chat from './pages/chat';
 import Pay from './pages/pay';
+import Register from './pages/register'
 import Midtrans from './pages/midtrans';
 
 // firebase.initializeApp(firebaseConfig)
@@ -56,6 +57,7 @@ export default function App() {
         {/* <Stack.Screen name="Notif" component={Notif} /> */}
 
         <Stack.Screen name="Login"  component={Login} />
+        <Stack.Screen name="Register"  component={Register} />
         <Stack.Screen name="Dashboard" component={Dashboard} />
         <Stack.Screen name="Chat"  component={Chat} options={{ headerShown: true }} />
         <Stack.Screen name="Pay" component={Pay} />
