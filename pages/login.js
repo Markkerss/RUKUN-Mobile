@@ -1,17 +1,84 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useRef } from 'react';
 import { StatusBar } from 'expo-status-bar';
 import { ImageBackground, StyleSheet, Text, View, Image } from 'react-native';
 import { TextInput, Button } from 'react-native-paper';
 import logo from '../assets/logins.png';
 import logoRukun from '../assets/logo.png';
-import { useDispatch, useSelector } from 'react-redux'
-import { login } from '../store/actions/user'
+import { login } from '../store/actions/usersActions'
+import { useDispatch } from 'react-redux'
+import Constants from 'expo-constants';
+import * as Notifications from 'expo-notifications';
 
+Notifications.setNotificationHandler({
+    handleNotification: async () => ({
+      shouldShowAlert: true,
+      shouldPlaySound: false,
+      shouldSetBadge: false,
+    }),
+});  
 
 const Login = ({route, navigation}) =>{
     const dispatch = useDispatch()
     const [username, setUsername] = React.useState('');
     const [password, setPassword] = React.useState('');
+    const dispatch = useDispatch()
+    const [expoPushToken, setExpoPushToken] = useState('');
+    const [notification, setNotification] = useState(false);
+    const notificationListener = useRef();
+    const responseListener = useRef();
+
+    useEffect(() => {
+        registerForPushNotificationsAsync().then(token => setExpoPushToken(token));
+
+        notificationListener.current = Notifications.addNotificationReceivedListener(notification => {
+        setNotification(notification);
+        });
+
+        responseListener.current = Notifications.addNotificationResponseReceivedListener(response => {
+        console.log(response);
+        });
+
+        return () => {
+        Notifications.removeNotificationSubscription(notificationListener.current);
+        Notifications.removeNotificationSubscription(responseListener.current);
+        };
+    }, []);
+
+    const handleSubmit = ()=>{
+        dispatch(login(navigation,username,password,expoPushToken))
+        navigation.navigate("Dashboard");
+    }
+
+    const registerForPushNotificationsAsync = async() => {
+        let token;
+        if (Constants.isDevice) {
+          const { status: existingStatus } = await Notifications.getPermissionsAsync();
+          let finalStatus = existingStatus;
+          if (existingStatus !== 'granted') {
+            const { status } = await Notifications.requestPermissionsAsync();
+            finalStatus = status;
+          }
+          if (finalStatus !== 'granted') {
+            alert('Failed to get push token for push notification!');
+            return;
+          }
+          token = (await Notifications.getExpoPushTokenAsync()).data;
+          console.log(token);
+          console.log(Constants.manifest.id,"wakwaw");
+        } else {
+          alert('Must use physical device for Push Notifications');
+        }
+      
+        if (Platform.OS === 'android') {
+          Notifications.setNotificationChannelAsync('default', {
+            name: 'default',
+            importance: Notifications.AndroidImportance.MAX,
+            vibrationPattern: [0, 250, 250, 250],
+            lightColor: '#FF231F7C',
+          });
+        }
+        return token;
+      }
 
     const handleSubmit = ()=>{
         dispatch(login(navigation,username,password))
@@ -54,15 +121,12 @@ const Login = ({route, navigation}) =>{
                     />
                 </View>
                 <View style={{width: "100%", paddingHorizontal: 30, marginTop: 10}}>
-                    <Button mode="contained" style={{height:50, justifyContent: 'center'}} onPress={()=>{handleSubmit()}}>Login</Button>
+                    <Button mode="contained" style={{height:50, justifyContent: 'center'}} onPress={()=>handleSubmit()}>Login</Button>
                 </View>
                 <View style={{width: "100%", paddingHorizontal: 30, marginTop: 10, alignItems: "center"}}>
-                    <Text>Dont have an account ? create</Text>
+                    <Text>Dont have an account ? Create</Text>
                 </View>
             </ImageBackground>
-            
-
-            
         </View>
     )
 }

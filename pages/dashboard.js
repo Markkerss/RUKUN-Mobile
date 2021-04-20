@@ -1,7 +1,6 @@
 import * as React from 'react';
 import { BottomNavigation, Text } from 'react-native-paper';
 import { useFonts, Poppins_700Bold } from '@expo-google-fonts/poppins';
-import Notif from './notif';
 import Home from './home';
 import Icon from 'react-native-vector-icons/Entypo';
 

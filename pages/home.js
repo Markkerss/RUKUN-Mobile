@@ -10,7 +10,6 @@ import { setTransactionsAsync } from '../store/actions/transactions'
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
 
-
 const Home = ({route,navigation}) =>{
     const dispatch = useDispatch()
     const { transactions } = useSelector(state => state.transactionsReducer)
@@ -22,7 +21,6 @@ const Home = ({route,navigation}) =>{
     
     useEffect (()  => {
         dispatch(setTransactionsAsync())
-        console.log(transactions, "<<<<transactions")
     }, [])
 
     let [fontsLoaded] = useFonts({Poppins_700Bold,Poppins_600SemiBold,Poppins_500Medium})
@@ -55,7 +53,6 @@ const Home = ({route,navigation}) =>{
             <View style={{marginTop:15, height:400}}>
                 <Text style={{...styles.desaName, color:"#665EDC"}}>Transaction</Text>
                 <ScrollView>
-                    {console.log(transactions,"wakwaw")}
                     {transactions?.map(transaction => 
                         <ListItemTransaction transaction={transaction} key={transaction.id}/>
                     )}
