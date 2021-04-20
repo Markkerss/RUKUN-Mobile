@@ -46,7 +46,6 @@ const Login = ({route, navigation}) =>{
 
     const handleSubmit = ()=>{
         dispatch(login(navigation,username,password,expoPushToken))
-        navigation.navigate("Dashboard");
     }
 
     const registerForPushNotificationsAsync = async() => {
@@ -79,11 +78,6 @@ const Login = ({route, navigation}) =>{
         }
         return token;
       }
-
-    const handleSubmit = ()=>{
-        dispatch(login(navigation,username,password))
-        // navigation.navigate("Dashboard");
-    }
 
     return(
         <View style={styles.container}>
