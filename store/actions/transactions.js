@@ -1,6 +1,6 @@
-const url = 'http://192.168.0.3:4000/'
-import AsyncStorage from '@react-native-async-storage/async-storage';
+const url = 'http://192.168.1.156:4000/'
 import axios from 'axios'
+import AsyncStorage from '@react-native-async-storage/async-storage'
 
 export function setTransactions(payload) {
   return { type: 'setTransactions', payload }
@@ -11,7 +11,7 @@ export function setTransactionsAsync() {
     dispatch({type: "isLoadingTransaction", payload:true })
     dispatch({type: "isErrorTransaction", payload:null })
     const token = await AsyncStorage.getItem('access_token')
-    console.log(token);
+    console.log(token, "<<<<access_token transactions");
     axios.get(url + 'transactions', {
       headers: { access_token: token }
     })
@@ -36,10 +36,10 @@ export function setTransactionsAsync() {
 }
 
 export function setMyTransactionsAsync() {
-  return async (dispatch) => {
+  return (dispatch) => {
     dispatch({type: "isLoadingTransaction", payload:true })
     dispatch({type: "isErrorTransaction", payload:null })
-    const token = await AsyncStorage.getItem('access_token')
+    const token = SyncStorage.get('access_token')
 
     axios.get(url + 'transactions/user', {
       headers: { access_token: token }

@@ -8,11 +8,11 @@
     "assetBundlePatterns": [
       "**/*"
     ],
+    "notification":{
+      "icon":"./assets/rukun-logo-96.png"
+    },
     "android": {
       "package": "io.expo.client"
-    },
-    "notification":{
-      "icon":"./assets/rukun-logo-only-transparent.png"
     }
   },
   "android": {
