@@ -11,7 +11,7 @@ const Tab = createMaterialBottomTabNavigator();
 const Dashboard = ({route, navgation}) => {
 
   return (
-    <Tab.Navigator activeColor="'#3C5CAC">
+    <Tab.Navigator activeColor="#3C5CAC">
       <Tab.Screen name="Home" component={Home} 
         options={{
           tabBarLabel: 'Home',
