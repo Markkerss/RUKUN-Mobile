@@ -1,4 +1,4 @@
-const url = 'http://192.168.0.3:4000/'
+const url = 'http://192.168.100.104:3000/'
 import axios from 'axios'
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
@@ -9,7 +9,7 @@ export function login(navigation,username,password,push_token) {
         })
         .then(async (res) => {
             console.log(res.data,"ini data");
-            await AsyncStorage.setItem('access_token', res.data)
+            await AsyncStorage.setItem('token', res.data)
             navigation.navigate("Dashboard")
         })
         .catch(error => {

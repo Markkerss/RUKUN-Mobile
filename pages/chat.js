@@ -1,5 +1,5 @@
-import React, { useEffect, useState } from 'react';
-import { Image, ScrollView, StyleSheet, Text, TextInput, View } from 'react-native';
+import React, { useEffect, useState, useRef } from 'react';
+import { FlatList, Image, ScrollView, StyleSheet, Text, TextInput, View } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
 import { Avatar, Button } from 'react-native-paper';
 import {useFonts,Poppins_700Bold,Poppins_600SemiBold,Poppins_500Medium} from '@expo-google-fonts/poppins';
@@ -14,6 +14,8 @@ const Chat = ({route,navigate}) =>{
     const [message, setMessage] = useState("")
     const [chat, setChat] = useState([])
     const [user, setUser] = useState({})
+    const [loading, setLoading] = useState(false)
+    const flatlist = useRef()
 
     let [fontsLoaded] = useFonts({Poppins_700Bold,Poppins_600SemiBold,Poppins_500Medium})
     const db = firebase.firestore().collection("chat").doc("desa"+user.VillageId).collection("message")
@@ -22,31 +24,59 @@ const Chat = ({route,navigate}) =>{
     const handleSubmit = () =>{
         console.log("mashok");
         console.log(user);
-        db.add({
-            message,
-            timestamp : firebase.firestore.FieldValue.serverTimestamp(),
-            userId : user.id,
-            userName : user.name
-        })
-    }
-
-    useEffect(() => {
-        async function getUser() {
-            const userString = await AsyncStorage.getItem('user')
-            setUser(JSON.parse(userString))
+        try {
+            db.add({
+                timestamp : firebase.firestore.FieldValue.serverTimestamp(),
+                message,
+                userId : user.id,
+                userName : user.name
+            })
+            setMessage("")
+        } catch (error) {
+            console.log(error);
         }
-        getUser()
-    }, [user])
 
-    useEffect(() => {
-        db.onSnapshot((querySnapshot) => {
+    }
+    async function getUser() {
+        setLoading(true)
+        const userString = await AsyncStorage.getItem('user')
+        const userJSON = JSON.parse(userString)
+        setUser(userJSON)
+        try {
+            firebase.firestore().collection("chat").doc("desa"+userJSON.VillageId).collection("message").orderBy("timestamp", 'asc').onSnapshot((querySnapshot) => {
                 var messages = [];
                 querySnapshot.forEach((doc) => {
                     messages.push(doc.data());
                 });
+                setLoading(false)
                 setChat(messages)
             });
+        } catch (error) {
+            console.log(error);
+        }
+    }
+
+    useEffect(() => {
+        getUser()
     }, [])
+
+    // useEffect(() => {
+    //     console.log(user,"masuk pertama kali");
+        
+        
+    // },[])
+
+    const getData = () =>{
+        setLoading(true)
+        db.orderBy("timestamp", 'asc').onSnapshot((querySnapshot) => {
+                var messages = [];
+                querySnapshot.forEach((doc) => {
+                    messages.push(doc.data());
+                });
+                setLoading(false)
+                setChat(messages)
+            });
+    }
 
 
 
@@ -56,19 +86,20 @@ const Chat = ({route,navigate}) =>{
     return(
         <>
         <View style={styles.container}>
-            <View>
-                {chat.map(item=>(
-                    item.userId == user.id ? (
-                        <View style={{justifyContent:"flex-end", flexDirection:'row', marginTop:25}}>
-                            <Text style={styles.bubbleMessageMe}>{item.message}</Text>
-                        </View>
-                    ) : (
-                        <View>
-                            <Text style={{marginLeft: 5, marginBottom:5}}>Fadho</Text>
-                            <Text style={styles.bubbleMessage}>{item.message}</Text>
-                        </View>
-                    )
-                ))}
+            <View style={{flex:1, marginBottom:80}}>
+            <FlatList
+                ref={ref => flatList = ref}
+                onContentSizeChange={() => flatList.scrollToEnd({animated: true})}
+                onLayout={() => flatList.scrollToEnd({animated: true})}
+                data={chat}
+                renderItem={(item)=>(<Bubble item={item.item} user={user}/>)}
+                keyExtractor={(item,index) => index.toString()}
+                refreshing={loading}
+                onRefresh={()=>{getData()}}
+                showsVerticalScrollIndicator={true}
+                showsHorizontalScrollIndicator={false}
+            />
+
                 
                 
       
@@ -81,6 +112,21 @@ const Chat = ({route,navigate}) =>{
         </View>
         
         </>
+    )
+}
+
+const Bubble = ({item,user})=>{
+    return(
+        item.userId == user.id ? (
+            <View style={{justifyContent:"flex-end", flexDirection:'row', marginTop:10}}>
+                <Text style={styles.bubbleMessageMe}>{item.message}</Text>
+            </View>
+        ) : (
+            <View>
+                <Text style={{marginLeft: 5, marginBottom:5}}>Fadho</Text>
+                <Text style={styles.bubbleMessage}>{item.message}</Text>
+            </View>
+        )
     )
 }
 
@@ -121,9 +167,9 @@ const styles = StyleSheet.create({
         justifyContent : 'flex-end',
         borderRadius: 15,
         flexDirection: "row",
-        backgroundColor: "#bdc3c7",
+        backgroundColor: "rgba(41, 128, 185,0.4)",
         padding: 10,
-        maxWidth: 250
+        maxWidth: 250,
     },
     
 });

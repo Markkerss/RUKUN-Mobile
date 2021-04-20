@@ -1,4 +1,4 @@
-const url = 'http://192.168.100.104:3000/'
+const url = 'https://rukun-server.herokuapp.com/'
 import axios from 'axios'
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
@@ -9,7 +9,7 @@ export function login(navigation,username,password,push_token) {
             // headers: { token: "" }
         })
         .then(async (res) => {
-            console.log(res.data,"ini data");
+            console.log(res.data,"ini data user");
             await AsyncStorage.setItem('token', res.data)
 
             return axios.get(url + 'user/', {
@@ -17,7 +17,7 @@ export function login(navigation,username,password,push_token) {
             })
         })
         .then(async (user) => {
-            console.log(user.data,"ini data");
+            console.log(user.data,"ini data user 2");
             await AsyncStorage.setItem('user', JSON.stringify(user.data) )
             navigation.navigate("Dashboard")
         })

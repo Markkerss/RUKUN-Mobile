@@ -4,7 +4,7 @@ import { ImageBackground, StyleSheet, Text, View, Image } from 'react-native';
 import { TextInput, Button } from 'react-native-paper';
 import logo from '../assets/logins.png';
 import logoRukun from '../assets/logo.png';
-import { login } from '../store/actions/usersActions'
+import { login } from '../store/actions/user'
 import { useDispatch } from 'react-redux'
 import Constants from 'expo-constants';
 import * as Notifications from 'expo-notifications';
@@ -21,7 +21,6 @@ const Login = ({route, navigation}) =>{
     const dispatch = useDispatch()
     const [username, setUsername] = React.useState('');
     const [password, setPassword] = React.useState('');
-    const dispatch = useDispatch()
     const [expoPushToken, setExpoPushToken] = useState('');
     const [notification, setNotification] = useState(false);
     const notificationListener = useRef();

@@ -32,7 +32,7 @@ const Suggestion = ({route,navigation}) =>{
                 </View>
                 
                 <View style={styles.content}>
-                    <Text style={styles.judul}>Suggestion</Text>
+                    <Text style={styles.judul}>Information</Text>
                     <FlatList
                         data={suggestions}
                         renderItem={(item)=>(<Tile data={item.item}/>)}
