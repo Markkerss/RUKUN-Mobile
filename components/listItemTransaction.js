@@ -6,17 +6,18 @@ import Icon from 'react-native-vector-icons/FontAwesome';
 import { useDispatch } from 'react-redux'
 
 const ListItemTransaction = (props)=>{
+    console.log(props.transaction)
     return (
         <View style={styles.list}>
             <View style={{flexDirection:"row", alignItems:"center", justifyContent:"space-between", padding:5, width:"100%"}}>
                 <View style={{flexDirection:"row", alignItems:"center", padding:5}}>
                     <Icon name="tag" style={{fontSize:40, paddingLeft:5, paddingRight: 14, color:"grey"}}></Icon>
                     <View>
-                        <Text style={{fontFamily:"Poppins_600SemiBold", fontSize: 20}}>{ props.transaction.title }</Text>
-                        <Text style={{fontFamily:"Poppins_500Medium", marginTop:-5}}>By { props.transaction.User.role === "admin" ? props.transaction.User.role: props.transaction.User.name }</Text>
+                        <Text style={{fontFamily:"Poppins_600SemiBold", fontSize: 20}}>{ props?.transaction.item.title }</Text>
+                        <Text style={{fontFamily:"Poppins_500Medium", marginTop:-5}}>By { props.transaction.item.User.role === "admin" ? props.transaction.item.User.role: props.transaction.item.User.name }</Text>
                     </View>
                 </View>
-                <Text style={{fontFamily:"Poppins_500Medium"}}>Rp { props.transaction.amount.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".") }</Text>
+                <Text style={{fontFamily:"Poppins_500Medium"}}>Rp { props.transaction.item.amount.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".") }</Text>
             </View>
         </View>
     )
