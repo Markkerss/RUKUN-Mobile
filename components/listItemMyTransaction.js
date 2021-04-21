@@ -17,6 +17,11 @@ const ListItemMyTransaction = (props)=>{
             return <Icon name="cash-register" style={{...styles.icon, backgroundColor: "#3C5CAC"}}></Icon>
         }
     }
+
+    const capitalizeFirstLetter = (string) => {
+        return string.charAt(0).toUpperCase() + string.slice(1);
+    }
+    
     return (
         <View style={styles.list}>
             {/* {console.log(item)} */}
@@ -27,6 +32,7 @@ const ListItemMyTransaction = (props)=>{
                     <View style={{flex:1}}>
                         <Text style={{fontFamily:"Poppins_600SemiBold", fontSize: 17}}>{ props.transaction.title }</Text>
                         <Text style={{fontFamily:"Poppins_500Medium", marginTop:-5}}>{props.transaction.createdAt.split("T")[0]}</Text>
+                        {/* <Text style={{fontFamily:"Poppins_500Medium", marginTop:-5}}>{ capitalizeFirstLetter(props.transaction.type) }</Text> */}
                     </View>
                 </View>
                 <Text style={{fontFamily:"Poppins_500Medium"}}>Rp { props.transaction.amount.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".") }</Text>

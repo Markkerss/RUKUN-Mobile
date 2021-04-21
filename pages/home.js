@@ -27,6 +27,7 @@ const Home = ({route,navigation}) =>{
     if (!fontsLoaded) {
         return <Text>loading</Text>;
     }
+    console.log(desa)
     return(
         <View style={styles.container}>
             <View style={styles.header}>
@@ -52,7 +53,6 @@ const Home = ({route,navigation}) =>{
             </View>
             <View style={{marginTop:15, flex:1, marginBottom:8}}>
                 <Text style={{...styles.desaName, color:"#3C5CAC"}}>My Transactions</Text>
-                {console.log(loading,"fadhoo")}
                 <FlatList
                     data={myTransactions}
                     renderItem={({item,index})=>(
@@ -96,6 +96,12 @@ const styles = StyleSheet.create({
         fontSize: 25,
         color: "white",
     },
+    myTransactionsJudul:{
+        fontFamily:'Poppins_700Bold',
+        fontSize: 25,
+        color: "white",
+        marginTop: 10
+    },
     judulSaldo:{
         fontFamily:'Poppins_600SemiBold',
         fontSize: 20,
@@ -118,7 +124,7 @@ const styles = StyleSheet.create({
     },
     buttonContainer : {
         flexDirection: "row",
-        marginTop: 10
+        marginTop: 12
     }
     
 });
