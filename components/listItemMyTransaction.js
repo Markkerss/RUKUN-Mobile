@@ -12,11 +12,11 @@ const ListItemMyTransaction = (props)=>{
                 <View style={{flexDirection:"row", alignItems:"center", padding:5}}>
                     <Icon name="tag" style={{fontSize:40, paddingLeft:5, paddingRight: 14, color:"grey"}}></Icon>
                     <View>
-                        <Text style={{fontFamily:"Poppins_600SemiBold", fontSize: 20}}>Iuran Sampah</Text>
-                        <Text style={{fontFamily:"Poppins_500Medium", marginTop:-5}}>By Fadho</Text>
+                        <Text style={{fontFamily:"Poppins_600SemiBold", fontSize: 20}}>{ props.transaction.title }</Text>
+                        <Text style={{fontFamily:"Poppins_500Medium", marginTop:-5}}>By { props.transaction.User.role === "Admin" ? props.transaction.User.role: props.transaction.User.name }</Text>
                     </View>
                 </View>
-                <Text style={{fontFamily:"Poppins_500Medium"}}>Rp 200.000</Text>
+                <Text style={{fontFamily:"Poppins_500Medium"}}>Rp { props.transaction.amount.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".") }</Text>
             </View>
         </View>
     )

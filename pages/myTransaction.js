@@ -6,35 +6,39 @@ import { Avatar, Button } from 'react-native-paper';
 import {useFonts,Poppins_700Bold,Poppins_600SemiBold,Poppins_500Medium} from '@expo-google-fonts/poppins';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import ListItemTransaction from '../components/listItemTransaction';
-import ListItemMyTransaction from '../components/listItemMyTransaction';
-import { setMyTransactionsAsync } from '../store/actions/transactions';
+import { setTransactionsAsync } from '../store/actions/transactions';
 
 const MyTransaction = ({route,navigation}) =>{
     const [fontsLoaded] = useFonts({Poppins_700Bold,Poppins_600SemiBold,Poppins_500Medium})
     const dispatch = useDispatch()
-    const { myTransactions, loading } = useSelector(state => state.transactionsReducer)
+    const { transactions, loading } = useSelector(state => state.transactionsReducer)
 
     useEffect(() => {
-        dispatch(setMyTransactionsAsync())
+        dispatch(setTransactionsAsync())
     }, [dispatch])
 
     if (!fontsLoaded) {
         return <Text>loading</Text>;
     }
+
+    const renderItem = ( transaction ) => (
+        // console.log(transaction)
+        <ListItemTransaction transaction={transaction}/>
+    );
+    
     return(
         <View style={styles.container}>
             <View style={styles.header}>
                 <Image source={require('../assets/logoBlue.png')} style={styles.logo}></Image>
-                <Avatar.Text  size={37} label="NA" />
             </View>
-            <View style={{marginTop:15, height:600}}>
-                <Text style={{...styles.desaName, color:"#665EDC"}}>My Transaction</Text>
+            <View style={{marginTop:15, height:730}}>
+                <Text style={{...styles.desaName, color:"#3c5cac"}}>Village Transactions</Text>
                 <FlatList
-                    data={myTransactions}
-                    renderItem={()=>(<ListItemMyTransaction/>)}
-                    keyExtractor={(item,index) => index.toString()}
+                    data={transactions}
+                    renderItem={renderItem}
+                    keyExtractor={(item) => item.id}
                     refreshing={loading}
-                    onRefresh={()=>{dispatch(setMyTransactionsAsync())}}
+                    onRefresh={()=>{dispatch(setTransactionsAsync())}}
                 />
             </View>
         </View>
