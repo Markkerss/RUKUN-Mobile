@@ -35,7 +35,7 @@ const Dashboard = ({route, navgation}) => {
       />
       <Tab.Screen name="Suggestion" component={Suggestion} 
         options={{
-          tabBarLabel: 'Suggestion',
+          tabBarLabel: 'Information',
           tabBarIcon: ({ color }) => (
             <Icon name="info" color={color} size={26} />
           ),
