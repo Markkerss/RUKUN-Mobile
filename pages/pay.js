@@ -34,7 +34,7 @@ const Pay = ({route,navigation}) =>{
             <Provider>
             <ImageBackground source={background} style={styles.background}>
                 <View style={styles.header}>
-                    <IconButton onPress={()=>{navigation.goBack()}} icon="chevron-left" color="white" size={40} style={{position:"absolute", left:0, top:26}}></IconButton>
+                    <IconButton onPress={()=>{navigation.goBack()}} icon="chevron-left" color="white" size={40} style={{position:"absolute", left:3, top:35}}></IconButton>
                     <Image source={require('../assets/logoWhite.png')} style={styles.logo}></Image>
                 </View>
                 <View style={styles.amount}>
@@ -105,7 +105,7 @@ const Pay = ({route,navigation}) =>{
             </Provider>
         </View>
         <View>
-            <Button mode="contained" onPress={()=>{navigation.navigate("Midtrans",{amount, notes, category})}} style={{borderRadius:0, paddingVertical:6}}>Pay</Button>
+            <Button mode="contained" onPress={()=>{navigation.navigate("Midtrans",{amount, notes, category})}} style={{borderRadius:0, paddingVertical:6, backgroundColor:'#3c5cac'}}>Pay</Button>
         </View>
         
         </>
@@ -123,7 +123,7 @@ const styles = StyleSheet.create({
         padding: 20,
         backgroundColor:"white", 
         width: "100%", 
-        height:600,
+        height:650,
         borderTopLeftRadius: 30,
         borderTopRightRadius: 30,
     },
@@ -134,8 +134,8 @@ const styles = StyleSheet.create({
         alignItems: 'center'
     },
     logo:{
-        width: 120,
-        height: 50
+        width: 150,
+        height: 60
     },
     header:{
         width:"100%",
@@ -167,8 +167,9 @@ const styles = StyleSheet.create({
     judul:{
         fontFamily:'Poppins_700Bold',
         fontSize: 30,
-        color: "#867FEE",
-        textAlign: "center"
+        color: "#3c5cac",
+        textAlign: "center",
+        marginBottom: 10
     },
     saldo:{
         fontFamily:'Poppins_600SemiBold',
