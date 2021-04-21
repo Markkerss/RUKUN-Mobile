@@ -31,12 +31,12 @@ const MyTransaction = ({route,navigation}) =>{
             <View style={styles.header}>
                 <Image source={require('../assets/logoBlue.png')} style={styles.logo}></Image>
             </View>
-            <View style={{marginTop:15, height:730}}>
+            <View style={{marginTop:15, flex:1, marginBottom:7}}>
                 <Text style={{...styles.desaName, color:"#3c5cac"}}>Village Transactions</Text>
                 <FlatList
                     data={transactions}
                     renderItem={renderItem}
-                    keyExtractor={(item) => item.id}
+                    keyExtractor={(item) => item.id.toString()}
                     refreshing={loading}
                     onRefresh={()=>{dispatch(setTransactionsAsync())}}
                 />
