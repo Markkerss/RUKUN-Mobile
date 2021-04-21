@@ -6,6 +6,12 @@ import Icon from 'react-native-vector-icons/FontAwesome';
 import { useDispatch } from 'react-redux'
 
 const ListItemMyTransaction = (props)=>{
+    console.log(props.transaction)
+
+    const capitalizeFirstLetter = (string) => {
+        return string.charAt(0).toUpperCase() + string.slice(1);
+    }
+    
     return (
         <View style={styles.list}>
             <View style={{flexDirection:"row", alignItems:"center", justifyContent:"space-between", padding:5, width:"100%"}}>
@@ -13,7 +19,7 @@ const ListItemMyTransaction = (props)=>{
                     <Icon name="tag" style={{fontSize:40, paddingLeft:5, paddingRight: 14, color:"grey"}}></Icon>
                     <View>
                         <Text style={{fontFamily:"Poppins_600SemiBold", fontSize: 20}}>{ props.transaction.title }</Text>
-                        <Text style={{fontFamily:"Poppins_500Medium", marginTop:-5}}>By { props.transaction.User.role === "Admin" ? props.transaction.User.role: props.transaction.User.name }</Text>
+                        <Text style={{fontFamily:"Poppins_500Medium", marginTop:-5}}>{ capitalizeFirstLetter(props.transaction.type) }</Text>
                     </View>
                 </View>
                 <Text style={{fontFamily:"Poppins_500Medium"}}>Rp { props.transaction.amount.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".") }</Text>

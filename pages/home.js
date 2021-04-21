@@ -27,6 +27,7 @@ const Home = ({route,navigation}) =>{
     if (!fontsLoaded) {
         return <Text>loading</Text>;
     }
+    console.log(desa)
     return(
         <View style={styles.container}>
             <View style={styles.header}>
@@ -38,7 +39,7 @@ const Home = ({route,navigation}) =>{
                 <View style={{flexDirection:"column",justifyContent:"space-between", height: "100%"}}>
                     <Text style={styles.desaName}>{desa.name}</Text>
                     <View>
-                        <Text style={styles.judulSaldo}>Saldo</Text>
+                        <Text style={styles.judulSaldo}>Balance</Text>
                         <Text style={styles.saldo}> Rp {desa.balance?.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".")}</Text>
 
                     </View>
@@ -49,7 +50,7 @@ const Home = ({route,navigation}) =>{
                 
             </View>
             <View style={{marginTop:15, height:470}}>
-                <Text style={{...styles.desaName, color:"#3C5CAC"}}>My Transactions</Text>
+                <Text style={{...styles.myTransactionsJudul, color:"#3C5CAC"}}>My Transactions</Text>
                 <ScrollView>
                     {myTransactions?.map(transaction => 
                         <ListItemMyTransaction transaction={transaction} key={transaction.id}/>
@@ -89,6 +90,12 @@ const styles = StyleSheet.create({
         fontSize: 25,
         color: "white",
     },
+    myTransactionsJudul:{
+        fontFamily:'Poppins_700Bold',
+        fontSize: 25,
+        color: "white",
+        marginTop: 10
+    },
     judulSaldo:{
         fontFamily:'Poppins_600SemiBold',
         fontSize: 20,
@@ -111,7 +118,7 @@ const styles = StyleSheet.create({
     },
     buttonContainer : {
         flexDirection: "row",
-        marginTop: 10
+        marginTop: 12
     }
     
 });

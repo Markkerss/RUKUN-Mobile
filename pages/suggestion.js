@@ -27,10 +27,8 @@ const Suggestion = ({route,navigation}) =>{
             <Provider>
             <ImageBackground source={background} style={styles.background}>
                 <View style={styles.header}>
-                    <IconButton onPress={()=>{navigation.goBack()}} icon="chevron-left" color="white" size={40} style={{position:"absolute", left:0, top:26}}></IconButton>
                     <Image source={require('../assets/logoWhite.png')} style={styles.logo}></Image>
                 </View>
-                
                 <View style={styles.content}>
                     <Text style={styles.judul}>Information</Text>
                     <FlatList
@@ -77,9 +75,10 @@ const styles = StyleSheet.create({
         padding: 20,
         backgroundColor:"white", 
         width: "100%", 
-        height:600,
+        height:750,
         borderTopLeftRadius: 30,
         borderTopRightRadius: 30,
+        marginTop: 10
     },
     background: {
         width: "100%",
@@ -88,13 +87,13 @@ const styles = StyleSheet.create({
         alignItems: 'center'
     },
     logo:{
-        width: 120,
+        width: 150,
         height: 50
     },
     header:{
         width:"100%",
         flexDirection: "row",
-        paddingTop: 40,
+        paddingTop: 50,
         justifyContent: "center",
         alignItems: "center",
         paddingBottom:10,
@@ -116,7 +115,7 @@ const styles = StyleSheet.create({
     judul:{
         fontFamily:'Poppins_700Bold',
         fontSize: 30,
-        color: "#867FEE",
+        color: "#3c5cac",
     },
     judulSection:{
         fontFamily:'Poppins_600SemiBold',
@@ -132,14 +131,12 @@ const styles = StyleSheet.create({
         color: "rgba(243, 156, 18,1.0)"
     },
     fab: {
+        backgroundColor: '#3c5cac',
         position: 'absolute',
         margin: 16,
         right: 0,
         bottom: 0,
-    },
-
-
-    
+    }
 });
 
 export default Suggestion
