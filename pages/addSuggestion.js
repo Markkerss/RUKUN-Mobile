@@ -42,12 +42,12 @@ const AddSuggestion = ({route,navigation}) =>{
             <Provider>
             <ImageBackground source={background} style={styles.background}>
                 <View style={styles.header}>
-                    <IconButton onPress={()=>{navigation.goBack()}} icon="chevron-left" color="white" size={40} style={{position:"absolute", left:0, top:26}}></IconButton>
+                    <IconButton onPress={()=>{navigation.goBack()}} icon="chevron-left" color="white" size={40} style={{position:"absolute", left:3, top:35}}></IconButton>
                     <Image source={require('../assets/logoWhite.png')} style={styles.logo}></Image>
                 </View>
                 
                 <View style={styles.content}>
-                    <Text style={styles.judul}>Add Suggestion</Text>
+                    <Text style={styles.judul}>Add Information</Text>
                     <TextInput
                         label="Titile"
                         autoFocus
@@ -57,7 +57,7 @@ const AddSuggestion = ({route,navigation}) =>{
                         style={{backgroundColor:"white"}}
                         left={<TextInput.Icon name="format-title"/>}
                     />
-                    <Pressable onPress={showModal} style={{marginTop:15}}>
+                    <Pressable onPress={showModal} style={{marginTop:15, marginBottom: 15}}>
                         <TextInput
                             label="Category"
                             mode = "outlined"
@@ -84,16 +84,16 @@ const AddSuggestion = ({route,navigation}) =>{
             
             <Portal>
                 <Modal visible={visible} onDismiss={hideModal} contentContainerStyle={{margin:60, backgroundColor:"white", justifyContent:"center", padding:10, borderRadius:10}}>
-                    <Menu.Item icon="trash-can" onPress={() => {setCategory("information"); hideModal()}} title="information" />
-                    <Menu.Item icon="security" onPress={() => {setCategory("suggestion"); hideModal()}} title="suggestion" />
-                    <Menu.Item icon="cash" onPress={() => {{setCategory("alert"); hideModal()}}} title="alert" />
-                    <Menu.Item icon="close" onPress={() => {hideModal()}} title="close" />
+                    <Menu.Item icon="information" onPress={() => {setCategory("information"); hideModal()}} title="Information" />
+                    <Menu.Item icon="shield" onPress={() => {setCategory("suggestion"); hideModal()}} title="Suggestion" />
+                    <Menu.Item icon="exclamation-thick" onPress={() => {{setCategory("alert"); hideModal()}}} title="Alert" />
+                    <Menu.Item icon="close" onPress={() => {hideModal()}} title="Close" />
                 </Modal>
             </Portal>
             </Provider>
         </View>
         <View>
-            <Button mode="contained" onPress={()=>{handleSubmit()}} style={{borderRadius:0, paddingVertical:6}}>Submit</Button>
+            <Button mode="contained" onPress={()=>{handleSubmit()}} style={{borderRadius:0, paddingVertical:6, backgroundColor: '#3c5cac'}}>Submit</Button>
         </View>
         </>
     )
@@ -110,9 +110,10 @@ const styles = StyleSheet.create({
         padding: 20,
         backgroundColor:"white", 
         width: "100%", 
-        height:600,
+        height:800,
         borderTopLeftRadius: 30,
         borderTopRightRadius: 30,
+        marginTop: 10,
     },
     background: {
         width: "100%",
@@ -121,8 +122,8 @@ const styles = StyleSheet.create({
         alignItems: 'center'
     },
     logo:{
-        width: 120,
-        height: 50
+        width: 160,
+        height: 60
     },
     header:{
         width:"100%",
@@ -137,13 +138,15 @@ const styles = StyleSheet.create({
         marginTop: 10,
         elevation:9,
         borderRadius: 20,
-        padding: 10
+        padding: 10,
+        marginBottom: 5,
     },
     judul:{
         fontFamily:'Poppins_700Bold',
         fontSize: 30,
-        color: "#867FEE",
-        textAlign: "center"
+        color: "#3c5cac",
+        textAlign: "center",
+        marginBottom: 10
     }
 
 
