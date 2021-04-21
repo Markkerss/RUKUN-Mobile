@@ -38,7 +38,7 @@ const Home = ({route,navigation}) =>{
                 <View style={{flexDirection:"column",justifyContent:"space-between", height: "100%"}}>
                     <Text style={styles.desaName}>{desa.name}</Text>
                     <View>
-                        <Text style={styles.judulSaldo}>Saldo</Text>
+                        <Text style={styles.judulSaldo}>Balance</Text>
                         <Text style={styles.saldo}> Rp {desa.balance?.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".")}</Text>
 
                     </View>

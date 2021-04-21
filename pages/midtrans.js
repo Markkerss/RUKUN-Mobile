@@ -3,11 +3,12 @@ import { Text } from 'react-native';
 import { WebView } from 'react-native-webview';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
-const Midtrans = ({route}) =>{
+const Midtrans = ({route, navigation}) =>{
     const { amount, category, notes} = route.params;
     const [user, setUser] = useState({})
     const [token, setToken] = useState(null)
     const [loading, setLoading] = useState(false)
+    const [navState, setNavState] = useState({})
 
     async function getUser() {
         setLoading(true)
@@ -22,6 +23,14 @@ const Midtrans = ({route}) =>{
             console.log(error);
         }
     }
+    useEffect(() => {
+        console.log(navState);
+        if (navState.title === "Example Domain") {
+            console.log("navv");
+            navigation.navigate("MyTransaction")
+        }
+
+    }, [navState])
     
     useEffect(() => {
         console.log("wakwaw");
@@ -32,7 +41,7 @@ const Midtrans = ({route}) =>{
     }else{
         return(
             <WebView style={{marginTop:30}}
-                onNavigationStateChange={(e)=>{console.log(e)}}
+                onNavigationStateChange={(e)=>{setNavState(e)}}
                 source={{ 
                     uri: `https://rukun-server.herokuapp.com/midtrans?amount=${amount}&category=${category}&note=${notes}&title=${notes}&username=fadhoo`,
                     headers: {
