@@ -147,7 +147,7 @@ const styles = StyleSheet.create({
     },
     amount:{
         marginTop: 20,
-        marginBottom:50,
+        marginBottom:35,
         flexDirection:"row",
         
     },

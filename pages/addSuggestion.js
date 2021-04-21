@@ -146,7 +146,8 @@ const styles = StyleSheet.create({
         fontSize: 30,
         color: "#3c5cac",
         textAlign: "center",
-        marginBottom: 10
+        marginBottom: 15,
+        marginTop: 10
     }
 
 
