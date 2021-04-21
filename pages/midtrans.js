@@ -27,7 +27,7 @@ const Midtrans = ({route, navigation}) =>{
         console.log(navState);
         if (navState.title === "Example Domain") {
             console.log("navv");
-            navigation.navigate("MyTransaction")
+            navigation.navigate("VillageTransaction")
         }
 
     }, [navState])

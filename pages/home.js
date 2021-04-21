@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import { Image, ScrollView, StyleSheet, Text, View } from 'react-native';
+import { FlatList, Image, ScrollView, StyleSheet, Text, View } from 'react-native';
 import { useDispatch, useSelector } from 'react-redux'
 import { LinearGradient } from 'expo-linear-gradient';
 import { Avatar, Button } from 'react-native-paper';
@@ -12,7 +12,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const Home = ({route,navigation}) =>{
     const dispatch = useDispatch()
-    const { myTransactions } = useSelector(state => state.transactionsReducer)
+    const { myTransactions, loading } = useSelector(state => state.transactionsReducer)
     const { desa } = useSelector(state => state.desaReducer)
 
     const clearAsyncStorage = async() => {
@@ -45,16 +45,23 @@ const Home = ({route,navigation}) =>{
                 </View>
             </LinearGradient>
             <View style={styles.buttonContainer}>
-                <Button onPress={()=>{navigation.navigate("Pay")}} mode="contained" style={{flexGrow: 1, backgroundColor: '#3C5CAC'}}>Pay</Button>
-                
+                <Button onPress={()=>{navigation.navigate("Pay")}} mode="contained" style={{flexGrow: 1, backgroundColor: '#3C5CAC', marginRight:6, paddingVertical:5, borderRadius:10}}>Pay</Button>
+                <Button onPress={()=>{navigation.navigate("Chat")}} mode="contained" style={{ backgroundColor: '#3C5CAC', alignContent:"center", justifyContent:"center", borderRadius:10}}>
+                    <Icon name="commenting" style={{fontSize:20,  }}></Icon>
+                </Button>
             </View>
-            <View style={{marginTop:15, height:470}}>
+            <View style={{marginTop:15, flex:1, marginBottom:8}}>
                 <Text style={{...styles.desaName, color:"#3C5CAC"}}>My Transactions</Text>
-                <ScrollView>
-                    {myTransactions?.map(transaction => 
-                        <ListItemMyTransaction transaction={transaction} key={transaction.id}/>
+                {console.log(loading,"fadhoo")}
+                <FlatList
+                    data={myTransactions}
+                    renderItem={({item,index})=>(
+                        <ListItemMyTransaction transaction={item} key={index}/>
                     )}
-                </ScrollView>
+                    keyExtractor={(item) => item.id.toString()}
+                    refreshing={loading}
+                    onRefresh={()=>{dispatch(setMyTransactionsAsync())}}
+                />
             </View>
         </View>
     )
