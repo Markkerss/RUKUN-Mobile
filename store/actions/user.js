@@ -1,4 +1,6 @@
 const url = 'https://rukun-server.herokuapp.com/'
+// const url = 'http://192.168.100.104:4000/'
+
 import axios from 'axios'
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
