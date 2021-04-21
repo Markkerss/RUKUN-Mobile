@@ -5,14 +5,14 @@ import { LinearGradient } from 'expo-linear-gradient';
 import { Avatar, Button } from 'react-native-paper';
 import {useFonts,Poppins_700Bold,Poppins_600SemiBold,Poppins_500Medium} from '@expo-google-fonts/poppins';
 import Icon from 'react-native-vector-icons/FontAwesome';
-import ListItemTransaction from '../components/listItemTransaction';
-import { setTransactionsAsync } from '../store/actions/transactions'
+import ListItemMyTransaction from '../components/listItemMyTransaction';
+import { setMyTransactionsAsync } from '../store/actions/transactions'
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
 
 const Home = ({route,navigation}) =>{
     const dispatch = useDispatch()
-    const { transactions } = useSelector(state => state.transactionsReducer)
+    const { myTransactions } = useSelector(state => state.transactionsReducer)
     const { desa } = useSelector(state => state.desaReducer)
 
     const clearAsyncStorage = async() => {
@@ -20,7 +20,7 @@ const Home = ({route,navigation}) =>{
     }
     
     useEffect (()  => {
-        dispatch(setTransactionsAsync())
+        dispatch(setMyTransactionsAsync())
     }, [])
 
     let [fontsLoaded] = useFonts({Poppins_700Bold,Poppins_600SemiBold,Poppins_500Medium})
@@ -31,9 +31,9 @@ const Home = ({route,navigation}) =>{
         <View style={styles.container}>
             <View style={styles.header}>
                 <Image source={require('../assets/logoBlue.png')} style={styles.logo}></Image>
-                <Avatar.Text  size={37} label="NA" />
+                <Icon name="sign-out" style={{fontSize:28, color: '#3c5cac', marginRight: 10}} onPress={()=>{clearAsyncStorage(); navigation.navigate('Login');}}></Icon>
             </View>
-            <LinearGradient colors={['#e0c3fc', '#8ec5fc']} style={styles.card}>
+            <LinearGradient colors={['#8ec5fc', '#3c5cac']} style={styles.card}>
                 <Image source={require('../assets/test.png')} style={styles.ilustrasi}></Image>
                 <View style={{flexDirection:"column",justifyContent:"space-between", height: "100%"}}>
                     <Text style={styles.desaName}>{desa.name}</Text>
@@ -45,16 +45,14 @@ const Home = ({route,navigation}) =>{
                 </View>
             </LinearGradient>
             <View style={styles.buttonContainer}>
-                <Button onPress={()=>{navigation.navigate("Pay")}} mode="contained" style={{flexGrow: 1, marginRight: 10}}>Pay</Button>
-                <Button onPress={()=>{clearAsyncStorage(); navigation.navigate('Login');}} mode="contained" style={{paddingTop:0}}>
-                    <Icon name="commenting-o" style={{fontSize:20}}></Icon>
-                </Button>
+                <Button onPress={()=>{navigation.navigate("Pay")}} mode="contained" style={{flexGrow: 1, backgroundColor: '#3C5CAC'}}>Pay</Button>
+                
             </View>
-            <View style={{marginTop:15, height:400}}>
-                <Text style={{...styles.desaName, color:"#665EDC"}}>Transaction</Text>
+            <View style={{marginTop:15, height:470}}>
+                <Text style={{...styles.desaName, color:"#3C5CAC"}}>My Transactions</Text>
                 <ScrollView>
-                    {transactions?.map(transaction => 
-                        <ListItemTransaction transaction={transaction} key={transaction.id}/>
+                    {myTransactions?.map(transaction => 
+                        <ListItemMyTransaction transaction={transaction} key={transaction.id}/>
                     )}
                 </ScrollView>
             </View>
@@ -70,8 +68,8 @@ const styles = StyleSheet.create({
       backgroundColor: '#ecf0f1',
     },
     logo:{
-        width: 120,
-        height: 50
+        width: 140,
+        height: 60
     },
     header:{
         flexDirection: "row",

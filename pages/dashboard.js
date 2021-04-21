@@ -24,9 +24,9 @@ const Dashboard = ({route, navgation}) => {
           
         }}
         />
-      <Tab.Screen name="MyTransaction" component={MyTransaction} 
+      <Tab.Screen name="VillageTransaction" component={MyTransaction} 
         options={{
-          tabBarLabel: 'My Transaction',
+          tabBarLabel: 'Transactions',
           tabBarIcon: ({ color }) => (
             <Icon name="credit" color={color} size={26} />
           ),
