@@ -53,8 +53,8 @@ const styles = StyleSheet.create({
       backgroundColor: '#ecf0f1',
     },
     logo:{
-        width: 120,
-        height: 50
+        width: 140,
+        height: 60
     },
     header:{
         flexDirection: "row",

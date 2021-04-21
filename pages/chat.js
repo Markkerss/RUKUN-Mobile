@@ -20,7 +20,6 @@ const Chat = ({route,navigate}) =>{
     let [fontsLoaded] = useFonts({Poppins_700Bold,Poppins_600SemiBold,Poppins_500Medium})
     const db = firebase.firestore().collection("chat").doc("desa"+user.VillageId).collection("message")
     
-    
     const handleSubmit = () =>{
         console.log("mashok");
         console.log(user);
@@ -78,11 +77,10 @@ const Chat = ({route,navigate}) =>{
             });
     }
 
-
-
     if (!fontsLoaded) {
         return <Text>loading</Text>;
     }
+    let emptyChat = []
     return(
         <>
         <View style={styles.container}>
@@ -92,17 +90,13 @@ const Chat = ({route,navigate}) =>{
                 onContentSizeChange={() => flatList.scrollToEnd({animated: true})}
                 onLayout={() => flatList.scrollToEnd({animated: true})}
                 data={chat}
-                renderItem={(item)=>(<Bubble item={item.item} user={user}/>)}
+                renderItem={(item, index)=>(<Bubble emptyChat={emptyChat} index={index} chat={chat} item={item.item} user={user}/>)}
                 keyExtractor={(item,index) => index.toString()}
                 refreshing={loading}
                 onRefresh={()=>{getData()}}
                 showsVerticalScrollIndicator={true}
                 showsHorizontalScrollIndicator={false}
             />
-
-                
-                
-      
             </View>
             <View style={styles.chatContainer}>
                 <TextInput style={styles.boxChat} value={message} onChangeText={setMessage}></TextInput>
@@ -114,18 +108,37 @@ const Chat = ({route,navigate}) =>{
         </>
     )
 }
-
-const Bubble = ({item,user})=>{
+const Bubble = ({item,user,index,emptyChat})=>{
+    emptyChat.push(item)
+    let seconds = null
+    if (item.timestamp !== null) {
+        seconds = (item.timestamp.seconds + Number((new Date().getTimezoneOffset()) * -60)) * 1000
+    } else {
+        seconds = (Number(Date.now()/1000)+ Number((new Date().getTimezoneOffset()) * -60)) * 1000 
+    }
     return(
         item.userId == user.id ? (
             <View style={{justifyContent:"flex-end", flexDirection:'row', marginTop:10}}>
+                <Text style={{marginRight: 5, marginTop:18}}>{new Date(seconds).toISOString().substr(11, 5)}</Text>
                 <Text style={styles.bubbleMessageMe}>{item.message}</Text>
             </View>
         ) : (
+            emptyChat.length !== 1 && (emptyChat[emptyChat.length - 1].userName === emptyChat[emptyChat.length - 2].userName) ? (
             <View>
-                <Text style={{marginLeft: 5, marginBottom:5}}>Fadho</Text>
-                <Text style={styles.bubbleMessage}>{item.message}</Text>
+                <View style={{flexDirection: 'row'}}>
+                    <Text style={styles.bubbleMessage}>{item.message}</Text>
+                    <Text style={{marginLeft: 5, marginTop:18}}>{new Date(seconds).toISOString().substr(11, 5)}</Text>
+                </View>
             </View>
+            ) : (
+                <View>
+                    <Text style={{marginLeft: 5, marginTop:13}}>{ item.userName }</Text>
+                    <View style={{flexDirection: 'row'}}>
+                        <Text style={styles.bubbleMessage}>{item.message}</Text>
+                        <Text style={{marginLeft: 5, marginTop:18}}>{new Date(seconds).toISOString().substr(11, 5)}</Text>
+                    </View>
+                </View>
+            )
         )
     )
 }
@@ -141,7 +154,7 @@ const styles = StyleSheet.create({
         width:"100%",
         flexGrow:1,
         position:"absolute",
-        bottom: 5,
+        bottom: 10,
         flexDirection: "row",
         height: 50,
         backgroundColor: "#bdc3c7",
@@ -153,7 +166,6 @@ const styles = StyleSheet.create({
         paddingLeft:10,
         borderColor: "white",
         margin: 3,
-        
     },
     bubbleMessage:{
         alignSelf:'baseline',
@@ -161,6 +173,7 @@ const styles = StyleSheet.create({
         flexDirection: "row",
         backgroundColor: "#bdc3c7",
         padding: 8,
+        marginTop: 4
     },
     bubbleMessageMe:{
         alignSelf:'baseline',
