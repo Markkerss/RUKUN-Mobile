@@ -28,6 +28,7 @@ const Stack = createStackNavigator();
 
 
 export default function App() {
+  console.disableYellowBox = true;
   const [isLogin, setIsLogin] = useState(null)
   async function getToken() {
     const token = await AsyncStorage.getItem('token')
